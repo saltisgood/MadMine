@@ -1,0 +1,3 @@
+[submodule "TheStephenAndroidLibrary"]
+	path = TheStephenAndroidLibrary
+	url = https://github.com/saltisgood/salt-android-library.git

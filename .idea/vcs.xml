@@ -4,6 +4,7 @@
     <mapping directory="" vcs="" />
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Game Lib" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/TheStephenAndroidLibrary" vcs="Git" />
   </component>
 </project>
 

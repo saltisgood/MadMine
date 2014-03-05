@@ -1,1 +1,1 @@
-include ':App', ':Game Lib'
+include ':App', ':Game Lib', ':TheStephenAndroidLibrary'

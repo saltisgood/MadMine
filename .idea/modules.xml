@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/App/App.iml" filepath="$PROJECT_DIR$/App/App.iml" />
       <module fileurl="file://$PROJECT_DIR$/Game Lib/Game Lib.iml" filepath="$PROJECT_DIR$/Game Lib/Game Lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/MadMine.iml" filepath="$PROJECT_DIR$/MadMine.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TheStephenAndroidLibrary/TheStephenAndroidLibrary.iml" filepath="$PROJECT_DIR$/TheStephenAndroidLibrary/TheStephenAndroidLibrary.iml" />
     </modules>
   </component>
 </project>
