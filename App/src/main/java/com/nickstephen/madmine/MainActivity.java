@@ -10,6 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.nickstephen.madmine.eg.OpenGLSurfaceView;
+import com.nickstephen.madmine.texteg.FPSTest;
 import com.nickstephen.madmine.texteg.TextRenderer;
 
 public class MainActivity extends FragmentActivity {
@@ -76,7 +77,8 @@ public class MainActivity extends FragmentActivity {
 
             this.setEGLContextClientVersion(2);
 
-            this.setRenderer(new TextRenderer(context));
+            //this.setRenderer(new TextRenderer(context));
+            this.setRenderer(new FPSTest(context));
         }
     }
 }

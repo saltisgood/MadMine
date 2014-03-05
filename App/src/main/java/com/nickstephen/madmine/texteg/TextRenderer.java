@@ -65,6 +65,7 @@ public class TextRenderer implements GLSurfaceView.Renderer {
             mGLText.draw("FPS: " + (1000.0f / (currentTime - mLastTick)), 0, 0);
         }
         mLastTick = currentTime;
+        mGLText.end();
 
         //mGLText.drawC("Test String 3D!", 0f, 0f, 0f, 0, -30, 0);
 //		mGLText.drawC( "Test String :)", 0, 0, 0 );          // Draw Test String
