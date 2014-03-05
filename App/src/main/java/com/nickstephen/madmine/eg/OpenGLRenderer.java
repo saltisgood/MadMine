@@ -4,7 +4,6 @@ import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 
-import com.nickstephen.gamelib.opengl.RendererUtil;
 import com.nickstephen.gamelib.opengl.Square;
 import com.nickstephen.gamelib.opengl.Triangle;
 
