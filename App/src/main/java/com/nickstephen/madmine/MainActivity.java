@@ -1,12 +1,16 @@
 package com.nickstephen.madmine;
 
+import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 
-import com.nickstephen.gamelib.opengl.OpenGLSurfaceView;
+import com.nickstephen.madmine.eg.OpenGLSurfaceView;
+import com.nickstephen.madmine.texteg.TextRenderer;
 
 public class MainActivity extends FragmentActivity {
 
@@ -16,9 +20,13 @@ public class MainActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         // Create a GLSurfaceView instance and set it
         // as the ContentView for this Activity
-        mGLView = new OpenGLSurfaceView(this);
+        //mGLView = new OpenGLSurfaceView(this);
+        mGLView = new CustomGLSurfaceView(this);
         setContentView(mGLView);
     }
 
@@ -62,4 +70,13 @@ public class MainActivity extends FragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    class CustomGLSurfaceView extends GLSurfaceView {
+        public CustomGLSurfaceView(Context context) {
+            super(context);
+
+            this.setEGLContextClientVersion(2);
+
+            this.setRenderer(new TextRenderer(context));
+        }
+    }
 }
