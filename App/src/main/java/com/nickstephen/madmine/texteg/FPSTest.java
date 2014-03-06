@@ -4,9 +4,17 @@ import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
+import android.os.Build;
+import android.os.Looper;
+import android.view.MotionEvent;
 
-import com.nickstephen.gamelib.opengl.Circle;
+import com.nickstephen.gamelib.GeneralUtil;
+import com.nickstephen.gamelib.opengl.Polygon;
+import com.nickstephen.gamelib.opengl.layout.Container;
 import com.nickstephen.gamelib.opengl.widget.FPSMeter;
+import com.nickstephen.madmine.content.TitleScreen;
+
+import java.util.Arrays;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -17,15 +25,21 @@ import javax.microedition.khronos.opengles.GL10;
 public class FPSTest implements GLSurfaceView.Renderer {
     private final Context mContext;
     private FPSMeter mFPS;
-    private Circle mCircle;
+    private Polygon mCircle;
+    private Container mContainer;
     private int mWidth;
     private int mHeight;
     private float[] mProjMatrix = new float[16];
-    private float[] mVMatrix = new float[16];
+    private float[] mBaseViewMatrix = new float[16];
+    private float[] mOffsetViewMatrix;
     private float[] mVPMatrix = new float[16];
+    private float mPosX = 0.0f;
+    private float mPosY = 0.0f;
+    private GLSurfaceView mSurface;
 
-    public FPSTest(Context context) {
+    public FPSTest(Context context, GLSurfaceView surface) {
         mContext = context;
+        mSurface = surface;
     }
 
     @Override
@@ -35,7 +49,8 @@ public class FPSTest implements GLSurfaceView.Renderer {
         mFPS = new FPSMeter(mContext.getAssets());
         mFPS.load("Roboto-Regular.ttf", 16, 3, 3);
 
-        mCircle = new Circle(0, 0, 0.5f);
+        //mCircle = new Polygon(mContext, 0, 0, 100f, 45.0f, 4);
+        //mContainer = new Container(250.0f, 250.0f);
 
         GLES20.glEnable(GLES20.GL_BLEND);
         GLES20.glBlendFunc(GLES20.GL_ONE, GLES20.GL_ONE_MINUS_SRC_ALPHA);
@@ -58,14 +73,22 @@ public class FPSTest implements GLSurfaceView.Renderer {
         this.mWidth = width;                             // Save Current Width
         this.mHeight = height;                           // Save Current Height
 
+        mContainer = new TitleScreen(mSurface, mContext, width, height);
+
         int useForOrtho = Math.min(width, height);
 
         //TODO: Is this wrong?
-        Matrix.orthoM(mVMatrix, 0,
+        Matrix.orthoM(mBaseViewMatrix, 0,
                 -useForOrtho/2,
                 useForOrtho/2,
                 -useForOrtho/2,
                 useForOrtho/2, 0.1f, 100f);
+
+        if (Build.VERSION.SDK_INT >= 9) {
+            mOffsetViewMatrix = Arrays.copyOf(mBaseViewMatrix, 16);
+        } else {
+            mOffsetViewMatrix = GeneralUtil.arrayCopy(mBaseViewMatrix);
+        }
 
         mFPS.onSurfaceChanged(width, height);
     }
@@ -77,9 +100,24 @@ public class FPSTest implements GLSurfaceView.Renderer {
 
         GLES20.glClear(clearMask);
 
-        Matrix.multiplyMM(mVPMatrix, 0, mProjMatrix, 0, mVMatrix, 0);
+        Matrix.multiplyMM(mVPMatrix, 0, mProjMatrix, 0, mBaseViewMatrix, 0);
 
         mFPS.onDrawFrame(mVPMatrix);
-        mCircle.draw(mVPMatrix);
+
+        mContainer.draw(mVPMatrix);
+
+        Matrix.translateM(mOffsetViewMatrix, 0, mBaseViewMatrix, 0, mPosX, mPosY, 0);
+        Matrix.multiplyMM(mVPMatrix, 0, mProjMatrix, 0, mOffsetViewMatrix, 0);
+
+        //mCircle.draw(mVPMatrix);
+    }
+
+    public void move(float dx, float dy) {
+        mPosX += dx;
+        mPosY += dy;
+    }
+
+    public boolean onTouchEvent(MotionEvent e) {
+        return mContainer.onTouchEvent(e);
     }
 }

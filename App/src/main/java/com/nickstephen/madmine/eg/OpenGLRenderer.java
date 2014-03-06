@@ -4,9 +4,9 @@ import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 
-import com.nickstephen.gamelib.opengl.Circle;
-import com.nickstephen.gamelib.opengl.Square;
-import com.nickstephen.gamelib.opengl.Triangle;
+import com.nickstephen.gamelib.opengl.Polygon;
+import com.nickstephen.gamelib.opengl.widget.Square;
+import com.nickstephen.gamelib.opengl.widget.Triangle;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -19,7 +19,7 @@ public class OpenGLRenderer implements GLSurfaceView.Renderer {
 
     private Triangle mTriangle;
     private Square mSquare;
-    private Circle mCircle;
+    private Polygon mCircle;
 
     // mMVPMatrix is an abbreviation for "Model View Projection Matrix"
     private final float[] mMVPMatrix = new float[16];
@@ -35,9 +35,9 @@ public class OpenGLRenderer implements GLSurfaceView.Renderer {
         // Set the background frame color
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-        mTriangle = new Triangle();
-        mSquare   = new Square();
-        mCircle = new Circle(0, 0, 0.5f);
+        //mTriangle = new Triangle(mCo);
+        //mSquare   = new Square();
+        //mCircle = new Polygon(0, 0, 0.5f);
     }
 
     @Override

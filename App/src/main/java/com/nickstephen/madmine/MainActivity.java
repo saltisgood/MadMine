@@ -6,9 +6,11 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.nickstephen.gamelib.GeneralUtil;
 import com.nickstephen.madmine.eg.OpenGLSurfaceView;
 import com.nickstephen.madmine.texteg.FPSTest;
 import com.nickstephen.madmine.texteg.TextRenderer;
@@ -21,13 +23,15 @@ public class MainActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        GeneralUtil.setupVibrator(this);
+
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         // Create a GLSurfaceView instance and set it
         // as the ContentView for this Activity
-        mGLView = new OpenGLSurfaceView(this);
-        //mGLView = new CustomGLSurfaceView(this);
+        //mGLView = new OpenGLSurfaceView(this);
+        mGLView = new CustomGLSurfaceView(this);
         setContentView(mGLView);
     }
 
@@ -72,13 +76,23 @@ public class MainActivity extends FragmentActivity {
     }
 
     class CustomGLSurfaceView extends GLSurfaceView {
+        private final float TOUCH_SCALE_FACTOR = 180.0f / 320;
+        private float mPreviousX;
+        private float mPreviousY;
+        private final FPSTest mRenderer;
+
         public CustomGLSurfaceView(Context context) {
             super(context);
 
             this.setEGLContextClientVersion(2);
 
             //this.setRenderer(new TextRenderer(context));
-            this.setRenderer(new FPSTest(context));
+            this.setRenderer(mRenderer = new FPSTest(context, this));
+        }
+
+        @Override
+        public boolean onTouchEvent(MotionEvent e) {
+            return mRenderer.onTouchEvent(e);
         }
     }
 }
