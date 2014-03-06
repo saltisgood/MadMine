@@ -4,6 +4,7 @@ import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 
+import com.nickstephen.gamelib.opengl.Circle;
 import com.nickstephen.gamelib.opengl.Square;
 import com.nickstephen.gamelib.opengl.Triangle;
 
@@ -18,6 +19,7 @@ public class OpenGLRenderer implements GLSurfaceView.Renderer {
 
     private Triangle mTriangle;
     private Square mSquare;
+    private Circle mCircle;
 
     // mMVPMatrix is an abbreviation for "Model View Projection Matrix"
     private final float[] mMVPMatrix = new float[16];
@@ -35,6 +37,7 @@ public class OpenGLRenderer implements GLSurfaceView.Renderer {
 
         mTriangle = new Triangle();
         mSquare   = new Square();
+        mCircle = new Circle(0, 0, 0.5f);
     }
 
     @Override
@@ -51,7 +54,7 @@ public class OpenGLRenderer implements GLSurfaceView.Renderer {
         Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
 
         // Draw square
-        mSquare.draw(mMVPMatrix);
+        //mSquare.draw(mMVPMatrix);
 
         // Create a rotation for the triangle
 
@@ -68,7 +71,9 @@ public class OpenGLRenderer implements GLSurfaceView.Renderer {
         Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mRotationMatrix, 0);
 
         // Draw triangle
-        mTriangle.draw(scratch);
+        //mTriangle.draw(scratch);
+
+        mCircle.draw(mMVPMatrix);
     }
 
     @Override

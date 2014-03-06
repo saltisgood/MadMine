@@ -5,6 +5,7 @@ import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 
+import com.nickstephen.gamelib.opengl.Circle;
 import com.nickstephen.gamelib.opengl.widget.FPSMeter;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -16,6 +17,7 @@ import javax.microedition.khronos.opengles.GL10;
 public class FPSTest implements GLSurfaceView.Renderer {
     private final Context mContext;
     private FPSMeter mFPS;
+    private Circle mCircle;
     private int mWidth;
     private int mHeight;
     private float[] mProjMatrix = new float[16];
@@ -32,6 +34,8 @@ public class FPSTest implements GLSurfaceView.Renderer {
 
         mFPS = new FPSMeter(mContext.getAssets());
         mFPS.load("Roboto-Regular.ttf", 16, 3, 3);
+
+        mCircle = new Circle(0, 0, 0.5f);
 
         GLES20.glEnable(GLES20.GL_BLEND);
         GLES20.glBlendFunc(GLES20.GL_ONE, GLES20.GL_ONE_MINUS_SRC_ALPHA);
@@ -76,5 +80,6 @@ public class FPSTest implements GLSurfaceView.Renderer {
         Matrix.multiplyMM(mVPMatrix, 0, mProjMatrix, 0, mVMatrix, 0);
 
         mFPS.onDrawFrame(mVPMatrix);
+        mCircle.draw(mVPMatrix);
     }
 }

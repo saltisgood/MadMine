@@ -26,8 +26,8 @@ public class MainActivity extends FragmentActivity {
 
         // Create a GLSurfaceView instance and set it
         // as the ContentView for this Activity
-        //mGLView = new OpenGLSurfaceView(this);
-        mGLView = new CustomGLSurfaceView(this);
+        mGLView = new OpenGLSurfaceView(this);
+        //mGLView = new CustomGLSurfaceView(this);
         setContentView(mGLView);
     }
 
