@@ -76,18 +76,14 @@ public class MainActivity extends FragmentActivity {
     }
 
     class CustomGLSurfaceView extends GLSurfaceView {
-        private final float TOUCH_SCALE_FACTOR = 180.0f / 320;
-        private float mPreviousX;
-        private float mPreviousY;
-        private final FPSTest mRenderer;
+        private final MainRenderer mRenderer;
 
         public CustomGLSurfaceView(Context context) {
             super(context);
 
             this.setEGLContextClientVersion(2);
 
-            //this.setRenderer(new TextRenderer(context));
-            this.setRenderer(mRenderer = new FPSTest(context, this));
+            this.setRenderer(mRenderer = new MainRenderer(context, this));
         }
 
         @Override

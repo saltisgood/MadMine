@@ -48,6 +48,11 @@ public class TitleScreen extends Container {
         start = new Triangle(context, 0, -100.0f, 50.0f, 0.0f, new float[] { 0.0f, 0.0f, 1.0f, 1.0f });
         start.setSurface(surface);
         this.mChildren.add(start);
+
+        Container content = new MainContent(surface, context, 200.0f, 200.0f);
+        content.setSurface(surface);
+        content.setParentOffset(-270.0f, 100.0f);
+        this.mChildContainers.add(content);
     }
 
 
