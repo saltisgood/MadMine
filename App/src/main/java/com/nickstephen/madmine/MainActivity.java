@@ -11,6 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.nickstephen.gamelib.GeneralUtil;
+import com.nickstephen.gamelib.opengl.text.TextUtil;
 import com.nickstephen.madmine.eg.OpenGLSurfaceView;
 import com.nickstephen.madmine.texteg.FPSTest;
 import com.nickstephen.madmine.texteg.TextRenderer;
@@ -43,6 +44,7 @@ public class MainActivity extends FragmentActivity {
         // you should consider de-allocating objects that
         // consume significant memory here.
         mGLView.onPause();
+        TextUtil.destroyInstance();
     }
 
     @Override

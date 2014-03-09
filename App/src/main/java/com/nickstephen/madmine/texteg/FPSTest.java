@@ -73,7 +73,7 @@ public class FPSTest implements GLSurfaceView.Renderer {
         this.mWidth = width;                             // Save Current Width
         this.mHeight = height;                           // Save Current Height
 
-        mContainer = new TitleScreen(mSurface, mContext, width, height);
+        //mContainer = new TitleScreen(mSurface, mContext, width, height);
 
         int useForOrtho = Math.min(width, height);
 

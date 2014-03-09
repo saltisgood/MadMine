@@ -9,7 +9,6 @@ import com.nickstephen.gamelib.opengl.Shape;
 import com.nickstephen.gamelib.opengl.layout.Container;
 import com.nickstephen.gamelib.opengl.widget.Circle;
 import com.nickstephen.gamelib.opengl.widget.IOnClickL;
-import com.nickstephen.gamelib.opengl.widget.Text;
 import com.nickstephen.gamelib.opengl.widget.Triangle;
 import com.nickstephen.lib.misc.StatMethods;
 import com.nickstephen.madmine.util.Constants;
@@ -24,7 +23,7 @@ public class TitleScreen extends Container {
         super(context, null, width, height, 0, 0);
         this.setSurface(surface);
 
-        Text titleText = new Text(context, this, "Mine Games", Constants.ROBOTO_FONT);
+        com.nickstephen.gamelib.opengl.text.Text titleText = new com.nickstephen.gamelib.opengl.text.Text(context, this, Constants.ROBOTO_FONT, "Mine Games");
         titleText.setSurface(surface);
         titleText.moveTo(0, height / 4.0f);
         this.mChildren.add(titleText);
