@@ -1,7 +1,8 @@
 package com.nickstephen.madmine.util;
 
 /**
- * Created by Nick Stephen on 6/03/14.
+ * Static class used for holding generic constant values
+ * @author Nick Stephen
  */
 public final class Constants {
     private Constants() {} // Do not call!

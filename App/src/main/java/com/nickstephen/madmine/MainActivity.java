@@ -1,25 +1,33 @@
 package com.nickstephen.madmine;
 
-import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.nickstephen.gamelib.GeneralUtil;
-import com.nickstephen.gamelib.opengl.text.TextUtil;
-import com.nickstephen.madmine.eg.OpenGLSurfaceView;
-import com.nickstephen.madmine.texteg.FPSTest;
-import com.nickstephen.madmine.texteg.TextRenderer;
+import com.nickstephen.gamelib.opengl.OpenGLSurfaceView;
+import com.nickstephen.gamelib.opengl.Renderer;
+import com.nickstephen.gamelib.opengl.text.Text;
 
+/**
+ * The launch activity of the app. Hosts all other visible components. Created as a FragmentActivity
+ * just in case I want fragments later.
+ */
 public class MainActivity extends FragmentActivity {
 
     private GLSurfaceView mGLView;
 
+    /**
+     * Callback method called on initial creation of the activity.
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut
+     *                           down then this Bundle contains the data it most recently supplied in
+     *                           {@link #onSaveInstanceState(android.os.Bundle)}
+     *                           <strong>Note: Otherwise it is null.</strong>
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,11 +39,17 @@ public class MainActivity extends FragmentActivity {
 
         // Create a GLSurfaceView instance and set it
         // as the ContentView for this Activity
-        //mGLView = new OpenGLSurfaceView(this);
-        mGLView = new CustomGLSurfaceView(this);
+        mGLView = new OpenGLSurfaceView(this);
+        Renderer renderer = new MainRenderer(this, mGLView);
+        ((OpenGLSurfaceView) mGLView).init(renderer);
+
         setContentView(mGLView);
     }
 
+    /**
+     * Callback method called when the activity is no longer user visible or something is overlaying
+     * it.
+     */
     @Override
     protected void onPause() {
         super.onPause();
@@ -44,9 +58,12 @@ public class MainActivity extends FragmentActivity {
         // you should consider de-allocating objects that
         // consume significant memory here.
         mGLView.onPause();
-        TextUtil.destroyInstance();
     }
 
+    /**
+     * Callback method called when the activity is either returning to visible after pausing, or is
+     * becoming visible for the first time. It's the last callback before giving control to the user.
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -75,22 +92,5 @@ public class MainActivity extends FragmentActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    class CustomGLSurfaceView extends GLSurfaceView {
-        private final MainRenderer mRenderer;
-
-        public CustomGLSurfaceView(Context context) {
-            super(context);
-
-            this.setEGLContextClientVersion(2);
-
-            this.setRenderer(mRenderer = new MainRenderer(context, this));
-        }
-
-        @Override
-        public boolean onTouchEvent(MotionEvent e) {
-            return mRenderer.onTouchEvent(e);
-        }
     }
 }

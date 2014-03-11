@@ -10,7 +10,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Created by Nick Stephen on 7/03/14.
+ * Generic testing class
+ * @author Nick Stephen
  */
 public class MainContent extends Container {
     public MainContent(@NotNull final Context context, @Nullable Container parent, float width, float height, float parentOffsetX, float parentOffsetY) {

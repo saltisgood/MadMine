@@ -7,6 +7,9 @@ import android.widget.Toast;
 
 import com.nickstephen.gamelib.opengl.Shape;
 import com.nickstephen.gamelib.opengl.layout.Container;
+import com.nickstephen.gamelib.opengl.layout.RootContainer;
+import com.nickstephen.gamelib.opengl.text.FPSMeter;
+import com.nickstephen.gamelib.opengl.text.Text;
 import com.nickstephen.gamelib.opengl.widget.Circle;
 import com.nickstephen.gamelib.opengl.widget.IOnClickL;
 import com.nickstephen.gamelib.opengl.widget.Triangle;
@@ -16,15 +19,14 @@ import com.nickstephen.madmine.util.Constants;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Created by Nick Stephen on 6/03/14.
+ * An example implementation of RootContainer
+ * @author Nick Stephen
  */
-public class TitleScreen extends Container {
+public class TitleScreen extends RootContainer {
     public TitleScreen(@NotNull GLSurfaceView surface, @NotNull final Context context, float width, float height) {
-        super(context, null, width, height, 0, 0);
-        this.setSurface(surface);
+        super(context, surface, width, height, 0, 0, Constants.ROBOTO_FONT);
 
-        com.nickstephen.gamelib.opengl.text.Text titleText = new com.nickstephen.gamelib.opengl.text.Text(context, this, Constants.ROBOTO_FONT, "Mine Games");
-        titleText.setSurface(surface);
+        Text titleText = new Text(context, this, Constants.ROBOTO_FONT, "Mine Games");
         titleText.moveTo(0, height / 4.0f);
         this.mChildren.add(titleText);
 
@@ -47,14 +49,9 @@ public class TitleScreen extends Container {
         this.mChildren.add(start);
 
         start = new Triangle(context, this, 0, -100.0f, 50.0f, 0.0f, new float[] { 0.0f, 0.0f, 1.0f, 1.0f });
-        start.setSurface(surface);
         this.mChildren.add(start);
 
         Container content = new MainContent(context, this, 200.0f, 200.0f, -270.0f, 100.0f);
-        content.setSurface(surface);
-        //content.setParentOffset(-270.0f, 100.0f);
         this.mChildContainers.add(content);
     }
-
-
 }
