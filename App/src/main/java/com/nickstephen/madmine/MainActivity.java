@@ -11,7 +11,7 @@ import android.view.WindowManager;
 import com.nickstephen.gamelib.GeneralUtil;
 import com.nickstephen.gamelib.opengl.OpenGLSurfaceView;
 import com.nickstephen.gamelib.opengl.Renderer;
-import com.nickstephen.gamelib.opengl.text.Text;
+import com.nickstephen.madmine.util.MineLoop;
 
 /**
  * The launch activity of the app. Hosts all other visible components. Created as a FragmentActivity
@@ -20,6 +20,7 @@ import com.nickstephen.gamelib.opengl.text.Text;
 public class MainActivity extends FragmentActivity {
 
     private GLSurfaceView mGLView;
+    private MineLoop mGameLoop;
 
     /**
      * Callback method called on initial creation of the activity.
@@ -36,6 +37,10 @@ public class MainActivity extends FragmentActivity {
 
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        mGameLoop = (MineLoop) MineLoop.init();
+        Thread thread = new Thread(mGameLoop);
+        thread.start();
 
         // Create a GLSurfaceView instance and set it
         // as the ContentView for this Activity
@@ -58,6 +63,9 @@ public class MainActivity extends FragmentActivity {
         // you should consider de-allocating objects that
         // consume significant memory here.
         mGLView.onPause();
+
+        //MineLoop.init(this).quit();
+        mGameLoop.pause();
     }
 
     /**
@@ -71,8 +79,17 @@ public class MainActivity extends FragmentActivity {
         // If you de-allocated graphic objects for onPause()
         // this is a good place to re-allocate them.
         mGLView.onResume();
+
+        //MineLoop.init(this).start();
+        mGameLoop.resume();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        mGameLoop.stop();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

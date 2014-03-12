@@ -8,4 +8,10 @@ public final class Constants {
     private Constants() {} // Do not call!
 
     public static final String ROBOTO_FONT = "Roboto-Regular.ttf";
+
+    public final static class Textures {
+        private Textures() {}
+
+        public static final String TEST = "testsprite.png";
+    }
 }
