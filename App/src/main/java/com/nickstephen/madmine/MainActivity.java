@@ -39,7 +39,7 @@ public class MainActivity extends FragmentActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         mGameLoop = (MineLoop) MineLoop.init();
-        Thread thread = new Thread(mGameLoop);
+        Thread thread = new Thread(mGameLoop, "Game Thread");
         thread.start();
 
         // Create a GLSurfaceView instance and set it
