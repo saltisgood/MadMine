@@ -38,6 +38,8 @@ public class MainActivity extends FragmentActivity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        Game.init(this);
+
         mGameLoop = (MineLoop) MineLoop.init();
         Thread thread = new Thread(mGameLoop, "Game Thread");
         thread.start();
@@ -87,6 +89,8 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        Game.getInstanceUnsafe().releaseContext();
 
         mGameLoop.stop();
     }

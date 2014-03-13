@@ -1,5 +1,7 @@
 package com.nickstephen.madmine.util;
 
+import android.os.Handler;
+
 import com.nickstephen.gamelib.run.GameLoop;
 
 /**
@@ -22,6 +24,8 @@ public class MineLoop extends GameLoop {
         return sInstance = new MineLoop();
     }
 
+
+
     /**
      * Protected instance of the constructor so that it can't be called elsewhere.
      */
@@ -33,4 +37,6 @@ public class MineLoop extends GameLoop {
     protected void updateGameLogic() {
         // Put game logic here!!!
     }
+
+
 }

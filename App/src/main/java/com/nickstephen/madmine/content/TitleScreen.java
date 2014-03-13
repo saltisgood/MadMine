@@ -4,6 +4,7 @@ import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.widget.Toast;
 
+import com.nickstephen.gamelib.anim.AlphaAnimation;
 import com.nickstephen.gamelib.anim.Animation;
 import com.nickstephen.gamelib.anim.RotationAnimation;
 import com.nickstephen.gamelib.anim.TranslationAnimation;
@@ -28,10 +29,11 @@ import org.jetbrains.annotations.NotNull;
  */
 public class TitleScreen extends RootContainer {
     public TitleScreen(@NotNull GLSurfaceView surface, @NotNull final Context context, float width, float height) {
-        super(context, surface, width, height, 0, 0, Constants.ROBOTO_FONT);
+        super(context, surface, width, height, Constants.ROBOTO_FONT);
 
         Text titleText = new Text(context, this, Constants.ROBOTO_FONT, "Mine Games");
         titleText.moveTo(0, height / 4.0f);
+        new AlphaAnimation(titleText, 1.0f, 0.0f).infiniteLoop().start();
         this.mChildren.add(titleText);
 
         Shape start = new Circle(context, this, 75, new float[] { 0.0f, 1.0f, 0.0f, 1.0f} );
@@ -49,10 +51,11 @@ public class TitleScreen extends RootContainer {
                 StatMethods.hotBread(context, "Circle Long Clicked!", Toast.LENGTH_SHORT);
             }
         });
+        new AlphaAnimation(start, 1.0f, 0.0f).infiniteLoop().start();
         this.mChildren.add(start);
 
         start = new Triangle(context, this, 0, -100.0f, 50.0f, 35.0f, new float[] { 0.0f, 0.0f, 1.0f, 1.0f });
-
+        new AlphaAnimation(start, 1.0f, 0.0f).infiniteLoop().start();
         RotationAnimation rot = new RotationAnimation(start, 0, 360);
         rot.setLoopDuration(5000).setLoop(true).infiniteLoop().start(2000);
 
@@ -62,6 +65,7 @@ public class TitleScreen extends RootContainer {
 
         AnimatedSprite sprite = new AnimatedSprite(context, this, Constants.Textures.TEST, 200, 200, 2, 2);
         sprite.setupAnimation();
+        new AlphaAnimation(sprite, 1.0f, 0.0f).infiniteLoop().setLoopingStyle(Animation.LoopStyle.REVERSE).start();
 
         this.mChildren.add(sprite);
 
