@@ -10,6 +10,8 @@ import com.nickstephen.gamelib.opengl.layout.RootContainer;
 import com.nickstephen.lib.Twig;
 import com.nickstephen.madmine.content.MainScreen;
 import com.nickstephen.madmine.content.StartScreen;
+import com.nickstephen.madmine.content.SwipableScreen;
+import com.nickstephen.madmine.content.TitleScreen;
 import com.nickstephen.madmine.util.MineLoop;
 
 import org.jetbrains.annotations.NotNull;
@@ -71,7 +73,10 @@ public class Game {
 
     public void setup(int width, int height) {
         if (!mStarted) {
-            mActiveView = new StartScreen(mContext, mSurface, width, height);
+            // mActiveView = new StartScreen(mContext, mSurface, width, height);
+            // mActiveView = new TitleScreen(mSurface, mContext, width, height);
+            mActiveView = new SwipableScreen(mSurface, mContext, width, height);
+
         } else {
             mActiveView = new MainScreen(mContext, mSurface, width, height);
         }

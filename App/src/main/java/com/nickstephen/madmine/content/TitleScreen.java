@@ -31,18 +31,20 @@ public class TitleScreen extends RootContainer {
     public TitleScreen(@NotNull GLSurfaceView surface, @NotNull final Context context, float width, float height) {
         super(context, surface, width, height, Constants.ROBOTO_FONT);
 
+        // Title text
         Text titleText = new Text(context, this, Constants.ROBOTO_FONT, "Mine Games");
         titleText.moveTo(0, height / 4.0f);
         new AlphaAnimation(titleText, 1.0f, 0.0f).infiniteLoop().start();
         this.mChildren.add(titleText);
 
+        // Add the circle shape and behaviour on long click.
         Shape start = new Circle(context, this, 75, new float[] { 0.0f, 1.0f, 0.0f, 1.0f} );
         start.setSurface(surface);
         start.moveTo(0, -100.0f);
         start.setOnClickListener(new IOnClickL() {
             @Override
             public void onClick(Shape shape) {
-                // do nothing
+                StatMethods.hotBread(context, "Circle tapped!", Toast.LENGTH_SHORT);
             }
         });
         start.setOnLongClickListener(new IOnClickL() {
@@ -54,6 +56,7 @@ public class TitleScreen extends RootContainer {
         new AlphaAnimation(start, 1.0f, 0.0f).infiniteLoop().start();
         this.mChildren.add(start);
 
+        // Add the triangle shape
         start = new Triangle(context, this, 0, -100.0f, 50.0f, 35.0f, new float[] { 0.0f, 0.0f, 1.0f, 1.0f });
         new AlphaAnimation(start, 1.0f, 0.0f).infiniteLoop().start();
         RotationAnimation rot = new RotationAnimation(start, 0, 360);
