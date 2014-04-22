@@ -72,6 +72,7 @@ public class TitleScreen extends RootContainer {
 
         this.mChildren.add(sprite);
 
+        // Creates a new container MainContent which contains the blue diamond.
         Container content = new MainContent(context, this, 200.0f, 200.0f, -270.0f, 100.0f);
         this.mChildContainers.add(content);
     }

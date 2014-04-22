@@ -13,5 +13,6 @@ public final class Constants {
         private Textures() {}
 
         public static final String TEST = "testsprite.png";
+        public static final String IMG = "sprites.png";
     }
 }
