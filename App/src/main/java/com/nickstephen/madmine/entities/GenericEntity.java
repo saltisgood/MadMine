@@ -1,20 +1,19 @@
 package com.nickstephen.madmine.entities;
 
-import com.nickstephen.madmine.util.Direction;
+import com.nickstephen.madmine.util.Position;
 
 /**
  * Created by Ben on 22/04/2014.
  */
 public class GenericEntity {
-    protected int xPos;
-    protected int yPos;
+    protected Position pos;
 
 
-    public int getXPos(){
-        return xPos;
-    }
-
-    public int getYPos(){
-        return yPos;
+    /**
+     * A getter for the position of the entity.
+     * @return The Position value of the entity.
+     */
+    public Position getPos(){
+        return pos;
     }
 }
