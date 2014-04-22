@@ -7,10 +7,10 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="F:\Android App Dev\madmine" />
-            <option value="F:\Android App Dev\madmine\App" />
-            <option value="F:\Android App Dev\madmine\Game Lib" />
-            <option value="F:\Android App Dev\madmine\TheStephenAndroidLibrary" />
+            <option value="F:\Android App Dev\MadMine" />
+            <option value="F:\Android App Dev\MadMine\App" />
+            <option value="F:\Android App Dev\MadMine\Game Lib" />
+            <option value="F:\Android App Dev\MadMine\TheStephenAndroidLibrary" />
           </set>
         </option>
       </GradleProjectSettings>
