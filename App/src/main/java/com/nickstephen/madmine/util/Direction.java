@@ -7,7 +7,7 @@ public enum Direction {
     UP, RIGHT, LEFT, DOWN;
 
     public Direction rotateClockwise(){
-        // TODO: Does this work in the way I think it does?
+        // TODO: Make sure this works in the intended fashion.
         switch(this){
             case UP:
                 return RIGHT;
@@ -22,14 +22,14 @@ public enum Direction {
     }
 
     public Direction rotateAntiClockwise(){
-        // TODO: Does this work in the way I think it does?
+        // TODO: Make sure this works in the intended fashion.
         switch(this){
             case UP:
                 return LEFT;
             case LEFT:
                 return DOWN;
             case DOWN:
-                return RIGHT:
+                return RIGHT;
             case RIGHT:
                 return UP;
         }
@@ -37,7 +37,7 @@ public enum Direction {
     }
 
     public Direction flip(){
-        // TODO: Does this work in the way I think it does?
+        // TODO: Make sure this works in the intended fashion.
         switch (this){
             case UP:
                 return DOWN;

@@ -17,7 +17,7 @@ public class Spider extends GenericNPC{
 
         Position desiredPos = this.pos.getRelPos(directionFacing);
         if (spaceAvailable(desiredPos)) { // This is meant to check to see if the space can be moved into.
-            moveEntity(this, desiredPos);
+            // moveEntity(this, desiredPos);
         }
         else {
             // TODO: Will this turn the spider, or do I have to go this.directionFacing = this.directionFacing.rotateClockwise()?

@@ -14,6 +14,11 @@ public class Position {
         yPos = y;
     }
 
+    /**
+     * Provides a way of finding out what is contained in the
+     * @param dir
+     * @return
+     */
     public Position getRelPos(@NotNull Direction dir){
         switch (dir){
             case UP:
