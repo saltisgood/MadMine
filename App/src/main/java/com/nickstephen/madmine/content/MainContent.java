@@ -20,6 +20,7 @@ public class MainContent extends Container {
         this.setUnlimitedBounds(true);
         this.setScrollable(true);
 
+
         Shape square = new Square(context, this, 25, 25, 60);
         this.mChildren.add(square);
     }
