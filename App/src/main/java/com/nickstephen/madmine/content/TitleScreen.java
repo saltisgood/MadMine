@@ -66,11 +66,17 @@ public class TitleScreen extends RootContainer {
                 .setLoop(true).setLoopingStyle(Animation.LoopStyle.REVERSE).start(2000);
         this.mChildren.add(start);
 
+        // Add the flashing numbers and shit
         AnimatedSprite sprite = new AnimatedSprite(context, this, Constants.Textures.TEST, 200, 200, 2, 2);
         sprite.setupAnimation();
         new AlphaAnimation(sprite, 1.0f, 0.0f).infiniteLoop().setLoopingStyle(Animation.LoopStyle.REVERSE).start();
 
         this.mChildren.add(sprite);
+
+        // Add little man sprite
+        Sprite guysprite = new AnimatedSprite(context, this, Constants.Textures.IMG, 128, 128, 5, 5);
+        guysprite.moveTo(50, 50);
+        this.mChildren.add(guysprite);
 
         // Creates a new container MainContent which contains the blue diamond.
         Container content = new MainContent(context, this, 200.0f, 200.0f, -270.0f, 100.0f);
