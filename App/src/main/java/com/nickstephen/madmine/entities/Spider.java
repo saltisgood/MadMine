@@ -9,9 +9,6 @@ public class Spider extends GenericNPC{
     void onTick(){
         // TODO: Kill player?  I think this is done elsewhere though so maybe not required here.
         moveAttempt();
-
-
-
     }
 
     void moveAttempt(){
