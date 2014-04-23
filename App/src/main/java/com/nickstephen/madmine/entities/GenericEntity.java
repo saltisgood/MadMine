@@ -1,12 +1,12 @@
 package com.nickstephen.madmine.entities;
 
-import com.nickstephen.madmine.util.Direction;
 import com.nickstephen.madmine.util.Position;
 
 /**
  * Created by Ben on 22/04/2014.
  */
 public class GenericEntity {
+    // TODO: Stevo, should this be protected or private?
     protected Position pos;
 
     /**
@@ -16,15 +16,11 @@ public class GenericEntity {
      */
     public void moveEntity(GenericEntity movingEntity, Position newPosition){
         // Changes the entity's position.
-        movingEntity.pos = newPosition;
+        movingEntity.pos = newPosition; // TODO: Stevo, I think this should use a setter instead of the way that I have it right now?
         // TODO: Interact with the map.
     }
 
-    public void gravity(){
-        if (this.pos.getRelPos(Direction.DOWN).emptySpace()) {
-            moveEntity(this, this.pos.getRelPos(Direction.DOWN));
-        }
-    }
+
 
 
     /**

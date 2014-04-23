@@ -5,6 +5,7 @@ package com.nickstephen.madmine.entities;
  * Created by Ben on 22/04/2014.
  */
 public class GenericNPC extends GenericChar{
+    // TODO: Stevo, should this be protected, or private?
     protected int waitTime;                 // The ticks remaining for the NPC to wait before its next move.
 
     /**
