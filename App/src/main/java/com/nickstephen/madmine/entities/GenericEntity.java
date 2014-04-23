@@ -1,5 +1,6 @@
 package com.nickstephen.madmine.entities;
 
+import com.nickstephen.madmine.util.Direction;
 import com.nickstephen.madmine.util.Position;
 
 /**
@@ -17,6 +18,12 @@ public class GenericEntity {
         // Changes the entity's position.
         movingEntity.pos = newPosition;
         // TODO: Interact with the map.
+    }
+
+    public void gravity(){
+        if (this.pos.getRelPos(Direction.DOWN).emptySpace()) {
+            moveEntity(this, this.pos.getRelPos(Direction.DOWN));
+        }
     }
 
 

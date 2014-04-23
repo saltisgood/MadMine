@@ -32,4 +32,13 @@ public class Position {
         }
         return null;
     }
+
+    public boolean emptySpace(){
+        // TODO: Check the map to see if the position is empty.
+        // If the space is empty:
+            // Return true
+        // Else
+            // Return false
+        return false;
+    }
 }

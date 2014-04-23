@@ -21,7 +21,7 @@ public class Spider extends GenericNPC{
 
         // Sets the desired position to be the space directly in front of the spider.
         Position desiredPos = this.pos.getRelPos(directionFacing);
-        if (spaceAvailable(desiredPos)) { // This is meant to check to see if the space can be moved into.
+        if (desiredPos.emptySpace()) { // This is meant to check to see if the space can be moved into.
             // Moves the spider forward one block if there is room.
             moveEntity(this, desiredPos);
         }
@@ -32,16 +32,6 @@ public class Spider extends GenericNPC{
         }
 
 
-    }
-
-    /**
-     * Checks to see if there is space available for the spider to move.
-     * @param newPos The position to which the spider will potentially move.
-     * @return
-     */
-    boolean spaceAvailable(Position newPos){
-        // TODO: This is currently a placeholder method.
-        return true;
     }
 
 }
