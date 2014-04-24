@@ -6,48 +6,39 @@ package com.nickstephen.madmine.util;
 public enum Direction {
     UP, RIGHT, LEFT, DOWN;
 
+    private Direction clockwise;
+    private Direction antiClockwise;
+    private Direction opposite;
+
+    static {
+        UP.clockwise = RIGHT;
+        RIGHT.clockwise = DOWN;
+        DOWN.clockwise = LEFT;
+        LEFT.clockwise = UP;
+
+        UP.antiClockwise = LEFT;
+        LEFT.antiClockwise = DOWN;
+        DOWN.antiClockwise = RIGHT;
+        RIGHT.antiClockwise = UP;
+
+        UP.opposite = DOWN;
+        DOWN.opposite = UP;
+        LEFT.opposite = RIGHT;
+        RIGHT.opposite = LEFT;
+    }
+
     public Direction rotateClockwise(){
         // TODO: Make sure this works in the intended fashion.
-        switch(this){
-            case UP:
-                return RIGHT;
-            case RIGHT:
-                return DOWN;
-            case DOWN:
-                return LEFT;
-            case LEFT:
-                return UP;
-        }
-        return null;
+        return clockwise;
     }
 
     public Direction rotateAntiClockwise(){
         // TODO: Make sure this works in the intended fashion.
-        switch(this){
-            case UP:
-                return LEFT;
-            case LEFT:
-                return DOWN;
-            case DOWN:
-                return RIGHT;
-            case RIGHT:
-                return UP;
-        }
-        return null;
+        return antiClockwise;
     }
 
     public Direction flip(){
         // TODO: Make sure this works in the intended fashion.
-        switch (this){
-            case UP:
-                return DOWN;
-            case DOWN:
-                return UP;
-            case LEFT:
-                return RIGHT;
-            case RIGHT:
-                return LEFT;
-        }
-        return null;
+        return opposite;
     }
 }
