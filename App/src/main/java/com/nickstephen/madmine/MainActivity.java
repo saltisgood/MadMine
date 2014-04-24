@@ -1,6 +1,5 @@
 package com.nickstephen.madmine;
 
-import android.opengl.GLSurfaceView;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -19,7 +18,7 @@ import com.nickstephen.madmine.util.MineLoop;
  */
 public class MainActivity extends FragmentActivity {
 
-    private GLSurfaceView mGLView;
+    private OpenGLSurfaceView mGLView;
     private MineLoop mGameLoop;
 
     /**
@@ -48,7 +47,7 @@ public class MainActivity extends FragmentActivity {
         // as the ContentView for this Activity
         mGLView = new OpenGLSurfaceView(this);
         Renderer renderer = new MainRenderer(this, mGLView);
-        ((OpenGLSurfaceView) mGLView).init(renderer);
+        mGLView.init(renderer);
 
         setContentView(mGLView);
     }
@@ -66,7 +65,6 @@ public class MainActivity extends FragmentActivity {
         // consume significant memory here.
         mGLView.onPause();
 
-        //MineLoop.init(this).quit();
         mGameLoop.pause();
     }
 
@@ -82,7 +80,6 @@ public class MainActivity extends FragmentActivity {
         // this is a good place to re-allocate them.
         mGLView.onResume();
 
-        //MineLoop.init(this).start();
         mGameLoop.resume();
     }
 

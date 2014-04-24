@@ -4,7 +4,9 @@ import android.content.Context;
 
 import com.nickstephen.gamelib.opengl.Shape;
 import com.nickstephen.gamelib.opengl.layout.Container;
+import com.nickstephen.gamelib.opengl.gestures.IOnClickL;
 import com.nickstephen.gamelib.opengl.widget.Square;
+import com.nickstephen.lib.Twig;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -21,6 +23,12 @@ public class MainContent extends Container {
         this.setScrollable(true);
 
         Shape square = new Square(context, this, 25, 25, 60);
+        square.setOnClickListener(new IOnClickL() {
+            @Override
+            public void onClick(Shape shape) {
+                Twig.debug("MainContent", "Square clicked!");
+            }
+        });
         this.mChildren.add(square);
     }
 

@@ -9,7 +9,7 @@ import com.nickstephen.gamelib.opengl.Shape;
 import com.nickstephen.gamelib.opengl.layout.RootContainer;
 import com.nickstephen.gamelib.opengl.text.Text;
 import com.nickstephen.gamelib.opengl.widget.Circle;
-import com.nickstephen.gamelib.opengl.widget.IOnClickL;
+import com.nickstephen.gamelib.opengl.gestures.IOnClickL;
 import com.nickstephen.gamelib.opengl.widget.Triangle;
 import com.nickstephen.madmine.Game;
 import com.nickstephen.madmine.util.Constants;
