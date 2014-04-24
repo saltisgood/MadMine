@@ -21,14 +21,15 @@ public class Spider extends GenericNPC{
 
         // Sets the desired position to be the space directly in front of the spider.
         Position desiredPos = this.pos.getRelPos(directionFacing);
-        if (desiredPos.emptySpace()) { // This is meant to check to see if the space can be moved into.
+        // This is meant to check to see if the space can be moved into.
+        if (desiredPos.emptySpace()) {
             // Moves the spider forward one block if there is room.
             moveEntity(this, desiredPos);
         }
         else {
             // If there is no room for the spider to move forwards, it turns pi/2 clockwise.
             // TODO: Will this turn the spider, or do I have to go this.directionFacing = this.directionFacing.rotateClockwise()?
-            this.directionFacing.rotateClockwise();
+            this.directionFacing = this.directionFacing.rotateClockwise();
         }
 
 
