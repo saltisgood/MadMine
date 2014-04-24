@@ -1,7 +1,6 @@
 package com.nickstephen.madmine.map;
 
-import org.jetbrains.annotations.NotNull;
-
+import com.nickstephen.madmine.entities.GenericEntity;
 /**
  * Created by Ben on 24/04/2014.
  */
@@ -13,7 +12,7 @@ public class Map {
     private final int scoreDoorOpen;  // Score required to open the door.
     private final int scoreTrophy;    // Score required to get the trophy for this map.
 
-    private int[][][][] layout;
+    private GenericEntity[][][][] layout;
 
     // Constructor for the map class.
     public Map(int width, int height, int scoreFinish, int scoreGoal){
@@ -24,7 +23,7 @@ public class Map {
         scoreTrophy = scoreGoal;
 
         // Create the correctly sized map array.
-        layout = new int[mapWidth][mapHeight][3][3];
+        layout = new GenericEntity[mapWidth][mapHeight][3][3];
     }
 
     // Getters for the map class.
