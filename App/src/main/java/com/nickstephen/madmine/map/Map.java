@@ -14,7 +14,8 @@ public class Map {
     private final int mapHeight;        // Number of blocks high the map is.
     private final int scoreDoorOpen;    // Score required to open the door.
     private final int scoreTrophy;      // Score required to get the trophy for this map.
-    private final int blockDivisor = 3; // The number of squares up and across that the blocks will be divided into.
+    private static final int blockDivisor = 3;
+                                        // The number of squares up and across that the blocks will be divided into.
                                         // NOTE: This is also the number of steps in the animation to move an entity.
 
     private GenericEntity[][][][] layout;
