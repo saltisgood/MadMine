@@ -20,7 +20,14 @@ public class GenericEntity {
         // TODO: Interact with the map.
     }
 
-
+    /**
+     * This is the canEntityMoveOnto for a generic entity.
+     * It should be overridden for each actual entity so that they can move (other than walls, etc obviously because they don't move).
+     * @return Whether the entity can move onto another entity type or not.
+     */
+    public boolean canEntityMoveOnto(GenericEntity entity){
+        return false;
+    }
 
 
     /**
