@@ -6,7 +6,7 @@ import com.nickstephen.madmine.util.Direction;
  * Created by Ben on 22/04/2014.
  */
 public class GenericChar extends GenericEntity {
-    protected Direction directionFacing;    // The direction in which the NPC is facing.
+    protected Direction mDirectionFacing = Direction.RIGHT;    // The direction in which the NPC/Character is facing.
 
 
     /**
@@ -14,7 +14,7 @@ public class GenericChar extends GenericEntity {
      * @return The direction that the NPC is facing.
      */
     public Direction getDirectionFacing(){
-        return directionFacing;
+        return mDirectionFacing;
     }
 
 }

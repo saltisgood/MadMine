@@ -10,11 +10,12 @@ public class Map {
     // NOTE: The matrix for the map is in the form [height][width] for calculation speed benefit.
     // TODO: Complete the map class.
 
-    private final int mapWidth;         // Number of blocks wide the map is.
-    private final int mapHeight;        // Number of blocks high the map is.
-    private final int scoreDoorOpen;    // Score required to open the door.
-    private final int scoreTrophy;      // Score required to get the trophy for this map.
-    private static final int blockDivisor = 3;
+    private static final int BLOCK_DIVISOR = 3;
+
+    private final int mMapWidth;         // Number of blocks wide the map is.
+    private final int mMapHeight;        // Number of blocks high the map is.
+    private final int mScoreDoorOpen;    // Score required to open the door.
+    private final int mScoreTrophy;      // Score required to get the trophy for this map.
                                         // The number of squares up and across that the blocks will be divided into.
                                         // NOTE: This is also the number of steps in the animation to move an entity.
 
@@ -23,13 +24,13 @@ public class Map {
     // Constructor for the map class.
     public Map(int width, int height, int scoreFinish, int scoreGoal){
         // Set the width, height, and score thresholds for the map.
-        mapWidth = width;
-        mapHeight = height;
-        scoreDoorOpen = scoreFinish;
-        scoreTrophy = scoreGoal;
+        mMapWidth = width;
+        mMapHeight = height;
+        mScoreDoorOpen = scoreFinish;
+        mScoreTrophy = scoreGoal;
 
         // Create the correctly sized map array as per above note.
-        layout = new GenericEntity[mapHeight][mapWidth][blockDivisor][blockDivisor];
+        layout = new GenericEntity[mMapHeight][mMapWidth][BLOCK_DIVISOR][BLOCK_DIVISOR];
     }
 
     // Returns the class of entity present at a location if it is full - null otherwise.
@@ -43,8 +44,8 @@ public class Map {
         // TODO: Work out if this is even necessary or if it is a waste of space.
         GenericEntity[][] block = this.layout[position.yPos][position.xPos];
         GenericEntity topLeft = block[0][0];
-        for (int i = 0; i < blockDivisor; i++){
-            for (int j = 0; j < blockDivisor; j++){
+        for (int i = 0; i < BLOCK_DIVISOR; i++){
+            for (int j = 0; j < BLOCK_DIVISOR; j++){
                 if (topLeft != block[i][j])
                     return null;
             }
@@ -70,8 +71,8 @@ public class Map {
     // Even if we end up having spiders able to collide and reverse - consider the case of
     // having rocks falling into each other and bouncing off.
     public boolean isSpaceEmpty(Position position){
-        for (int i = 0; i < blockDivisor; i++){
-            for (int j = 0; j < blockDivisor; j++){
+        for (int i = 0; i < BLOCK_DIVISOR; i++){
+            for (int j = 0; j < BLOCK_DIVISOR; j++){
                 if (this.layout[position.yPos][position.xPos][i][j] != null)
                     return false;
             }
@@ -81,16 +82,16 @@ public class Map {
 
     // Getters for the map class.
     public int getMapWidth(){
-        return mapWidth;
+        return mMapWidth;
     }
     public int getMapHeight(){
-        return mapHeight;
+        return mMapHeight;
     }
     public int getScoreDoorOpen(){
-        return scoreDoorOpen;
+        return mScoreDoorOpen;
     }
     public int getScoreTrophy(){
-        return scoreTrophy;
+        return mScoreTrophy;
     }
 
 }
