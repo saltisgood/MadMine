@@ -40,6 +40,7 @@ public class Map {
      * @return The entity that spans the block, or null if no single entity spans the full block (or if it is empty).
      */
     public GenericEntity whatIsHere(Position position){
+        // TODO: Work out if this is even necessary or if it is a waste of space.
         GenericEntity[][] block = this.layout[position.yPos][position.xPos];
         GenericEntity topLeft = block[0][0];
         for (int i = 0; i < blockDivisor; i++){
@@ -51,9 +52,23 @@ public class Map {
         return topLeft;
     }
 
+    public boolean moveEntity(GenericEntity entity, Position oldPos, Position newPos){
+        // Check to make sure the entity on the map corresponds with the entity being moved.
+        if(whatIsHere(oldPos) == entity){
+            // Check the direction it should move to.
+            // Put the 3 new entity references into the side of the new block.
+            // Remove the 3 old entity references from the side of the old block.
+            // Return true to indicate that it's happened.
+            return true;
+        }
+        return false;
+    }
+
 
 
     // Checks if a space is completely empty, mainly for NPC AI purposes.
+    // Even if we end up having spiders able to collide and reverse - consider the case of
+    // having rocks falling into each other and bouncing off.
     public boolean isSpaceEmpty(Position position){
         for (int i = 0; i < blockDivisor; i++){
             for (int j = 0; j < blockDivisor; j++){

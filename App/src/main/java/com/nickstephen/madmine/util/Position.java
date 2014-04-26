@@ -34,7 +34,7 @@ public class Position {
     }
 
     public boolean emptySpace(){
-        // TODO: Check the map to see if the position is empty.
+        // TODO: I'm pretty sure this should be in the map class so it can be deleted.
         // If the space is empty:
             // Return true
         // Else
