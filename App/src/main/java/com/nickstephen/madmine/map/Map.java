@@ -1,0 +1,97 @@
+package com.nickstephen.madmine.map;
+
+import com.nickstephen.madmine.entities.GenericEntity;
+import com.nickstephen.madmine.util.Position;
+
+/**
+ * Created by Ben on 24/04/2014.
+ */
+public class Map {
+    // NOTE: The matrix for the map is in the form [height][width] for calculation speed benefit.
+    // TODO: Complete the map class.
+
+    private static final int BLOCK_DIVISOR = 3;
+
+    private final int mMapWidth;         // Number of blocks wide the map is.
+    private final int mMapHeight;        // Number of blocks high the map is.
+    private final int mScoreDoorOpen;    // Score required to open the door.
+    private final int mScoreTrophy;      // Score required to get the trophy for this map.
+                                        // The number of squares up and across that the blocks will be divided into.
+                                        // NOTE: This is also the number of steps in the animation to move an entity.
+
+    private GenericEntity[][][][] layout;
+
+    // Constructor for the map class.
+    public Map(int width, int height, int scoreFinish, int scoreGoal){
+        // Set the width, height, and score thresholds for the map.
+        mMapWidth = width;
+        mMapHeight = height;
+        mScoreDoorOpen = scoreFinish;
+        mScoreTrophy = scoreGoal;
+
+        // Create the correctly sized map array as per above note.
+        layout = new GenericEntity[mMapHeight][mMapWidth][BLOCK_DIVISOR][BLOCK_DIVISOR];
+    }
+
+    // Returns the class of entity present at a location if it is full - null otherwise.
+
+    /**
+     * Checks if there is an entity that fully spans a block.
+     * @param position The position to check.
+     * @return The entity that spans the block, or null if no single entity spans the full block (or if it is empty).
+     */
+    public GenericEntity whatIsHere(Position position){
+        // TODO: Work out if this is even necessary or if it is a waste of space.
+        GenericEntity[][] block = this.layout[position.yPos][position.xPos];
+        GenericEntity topLeft = block[0][0];
+        for (int i = 0; i < BLOCK_DIVISOR; i++){
+            for (int j = 0; j < BLOCK_DIVISOR; j++){
+                if (topLeft != block[i][j])
+                    return null;
+            }
+        }
+        return topLeft;
+    }
+
+    public boolean moveEntity(GenericEntity entity, Position oldPos, Position newPos){
+        // Check to make sure the entity on the map corresponds with the entity being moved.
+        if(whatIsHere(oldPos) == entity){
+            // Check the direction it should move to.
+            // Put the 3 new entity references into the side of the new block.
+            // Remove the 3 old entity references from the side of the old block.
+            // Return true to indicate that it's happened.
+            return true;
+        }
+        return false;
+    }
+
+
+
+    // Checks if a space is completely empty, mainly for NPC AI purposes.
+    // Even if we end up having spiders able to collide and reverse - consider the case of
+    // having rocks falling into each other and bouncing off.
+    public boolean isSpaceEmpty(Position position){
+        for (int i = 0; i < BLOCK_DIVISOR; i++){
+            for (int j = 0; j < BLOCK_DIVISOR; j++){
+                if (this.layout[position.yPos][position.xPos][i][j] != null)
+                    return false;
+            }
+        }
+        return true;
+    }
+
+    // Getters for the map class.
+    public int getMapWidth(){
+        return mMapWidth;
+    }
+    public int getMapHeight(){
+        return mMapHeight;
+    }
+    public int getScoreDoorOpen(){
+        return mScoreDoorOpen;
+    }
+    public int getScoreTrophy(){
+        return mScoreTrophy;
+    }
+
+}

@@ -35,7 +35,22 @@ public class MineLoop extends GameLoop {
 
     @Override
     protected void updateGameLogic() {
+        checkGameStatus();
+        runNPCs();
+
         // Put game logic here!!!
+    }
+
+    protected void checkGameStatus() {
+        // Active,
+        // Paused, or
+        // Game over.
+    }
+
+    protected void runNPCs(){
+        // For each NPC:
+            // If passive:
+                // Execute next action.
     }
 
 

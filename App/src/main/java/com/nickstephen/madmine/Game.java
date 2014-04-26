@@ -9,15 +9,12 @@ import com.nickstephen.gamelib.opengl.Shape;
 import com.nickstephen.gamelib.opengl.layout.RootContainer;
 import com.nickstephen.lib.Twig;
 import com.nickstephen.madmine.content.MainScreen;
-import com.nickstephen.madmine.content.StartScreen;
 import com.nickstephen.madmine.content.TitleScreen;
 import com.nickstephen.madmine.util.MineLoop;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -60,14 +57,12 @@ public class Game extends com.nickstephen.gamelib.run.Game {
 
     public void setup(int width, int height) {
         super.setup(width, height);
-
-        mActiveView = new TitleScreen(mContext, getSurface(), width, height);
-
-        /* if (!mStarted) {
-            mActiveView = new StartScreen(mContext, getSurface(), width, height);
+		
+        if (!mStarted) {
+            mActiveView = new TitleScreen(mContext, getSurface(), width, height);
         } else {
             mActiveView = new MainScreen(mContext, getSurface(), width, height);
-        } */
+        }
     }
 
     public @Nullable RootContainer getSwapView() {
