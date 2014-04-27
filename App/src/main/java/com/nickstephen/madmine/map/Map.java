@@ -1,14 +1,19 @@
 package com.nickstephen.madmine.map;
 
 import com.nickstephen.madmine.entities.GenericEntity;
+import com.nickstephen.madmine.entities.PlayerChar;
 import com.nickstephen.madmine.util.Position;
+
+import java.util.List;
 
 /**
  * Created by Ben on 24/04/2014.
  */
-public class Map {
-    // NOTE: The matrix for the map is in the form [height][width] for calculation speed benefit.
+public final class Map {
+    // NOTE: The matrix for the map is in the form [height][width] for clarity.
     // TODO: Complete the map class.
+
+    static final int MAP_MAGIC_NO = 0x54474D50;
 
     private static final int BLOCK_DIVISOR = 3;
 
@@ -18,11 +23,14 @@ public class Map {
     private final int mScoreTrophy;      // Score required to get the trophy for this map.
                                         // The number of squares up and across that the blocks will be divided into.
                                         // NOTE: This is also the number of steps in the animation to move an entity.
+    int mMapVersionNo;
+    PlayerChar mPlayer;
+    List<GenericEntity> mEntities;
 
-    private GenericEntity[][][][] layout;
+    GenericEntity[][][][] mLayout;
 
     // Constructor for the map class.
-    public Map(int width, int height, int scoreFinish, int scoreGoal){
+    Map(int width, int height, int scoreFinish, int scoreGoal){
         // Set the width, height, and score thresholds for the map.
         mMapWidth = width;
         mMapHeight = height;
@@ -30,7 +38,7 @@ public class Map {
         mScoreTrophy = scoreGoal;
 
         // Create the correctly sized map array as per above note.
-        layout = new GenericEntity[mMapHeight][mMapWidth][BLOCK_DIVISOR][BLOCK_DIVISOR];
+        mLayout = new GenericEntity[mMapHeight][mMapWidth][BLOCK_DIVISOR][BLOCK_DIVISOR];
     }
 
     // Returns the class of entity present at a location if it is full - null otherwise.
@@ -42,7 +50,7 @@ public class Map {
      */
     public GenericEntity whatIsHere(Position position){
         // TODO: Work out if this is even necessary or if it is a waste of space.
-        GenericEntity[][] block = this.layout[position.yPos][position.xPos];
+        GenericEntity[][] block = this.mLayout[position.yPos][position.xPos];
         GenericEntity topLeft = block[0][0];
         for (int i = 0; i < BLOCK_DIVISOR; i++){
             for (int j = 0; j < BLOCK_DIVISOR; j++){
@@ -73,11 +81,19 @@ public class Map {
     public boolean isSpaceEmpty(Position position){
         for (int i = 0; i < BLOCK_DIVISOR; i++){
             for (int j = 0; j < BLOCK_DIVISOR; j++){
-                if (this.layout[position.yPos][position.xPos][i][j] != null)
+                if (this.mLayout[position.yPos][position.xPos][i][j] != null)
                     return false;
             }
         }
         return true;
+    }
+
+    void setEntityAtPosition(GenericEntity entity, int x, int y) {
+        for (int i = 0; i < BLOCK_DIVISOR; i++) {
+            for (int j = 0; j < BLOCK_DIVISOR; j++) {
+                mLayout[y][x][i][j] = entity;
+            }
+        }
     }
 
     // Getters for the map class.

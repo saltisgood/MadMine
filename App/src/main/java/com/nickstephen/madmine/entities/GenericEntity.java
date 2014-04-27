@@ -6,6 +6,21 @@ import com.nickstephen.madmine.util.Position;
  * Created by Ben on 22/04/2014.
  */
 public class GenericEntity {
+    private static final short PLAYER = 0x1;
+
+
+    public static GenericEntity create(int x, int y, short type, short subtype) {
+        return null;
+    }
+
+    public static PlayerChar createPlayer(int x, int y, short type) {
+        return null;
+    }
+
+    public static boolean isPlayer(short type) {
+        return type == PLAYER;
+    }
+
     // TODO: Stevo, should this be protected or private?
     protected Position mPos;
 
