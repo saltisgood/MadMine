@@ -56,7 +56,7 @@ public class MapLoader {
 
             char scoreTrophy = fileStream.readChar();
 
-            map = new Map(width, height, scoreFinish, scoreTrophy);
+            map = new Map(width, height, scoreFinish, scoreTrophy, version);
 
             char optional = fileStream.readChar(); // Give some space for future optional headers //
 
@@ -64,25 +64,17 @@ public class MapLoader {
             fileStream.skip(optional * SIZEOF_INTEGER);
 
             List<GenericEntity> entities = new ArrayList<GenericEntity>();
-            PlayerChar player = null;
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
                     short entity = fileStream.readShort();
                     short subtype = fileStream.readShort();
 
                     if (entity != 0) { // Not empty space. //
-                        GenericEntity entityObj;
+                        GenericEntity entityObj = GenericEntity.create(map, x, y, entity, subtype);
 
-                        if (GenericEntity.isPlayer(entity)) {
-                            if (player != null) { // There can only be 1 player!!! //
-                                Twig.debug("MapLoader", "Multiple players in map file!");
-                                return null;
-                            }
-
-                            player = GenericEntity.createPlayer(x, y, subtype);
-                            entityObj = player;
-                        } else { // Any more necessary type checks? //
-                            entityObj = GenericEntity.create(x, y, entity, subtype);
+                        if (entityObj == null) {
+                            Twig.debug("MapLoader", "Error creating entity!");
+                            return null;
                         }
 
                         map.setEntityAtPosition(entityObj, x, y);
@@ -91,15 +83,9 @@ public class MapLoader {
                 }
             }
 
-            map.mMapVersionNo = version;
-
-            if (player == null) { // Map must contain a player! //
-                Twig.debug("MapLoader", "No players in map file!");
+            if (!map.setup(entities)) {
                 return null;
             }
-            map.mPlayer = player;
-
-            map.mEntities = entities;
 
             // TODO: Any additional processing? Footers, user information? //
         } catch (IOException e) {

@@ -1,8 +1,11 @@
 package com.nickstephen.madmine.map;
 
+import com.nickstephen.lib.Twig;
 import com.nickstephen.madmine.entities.GenericEntity;
 import com.nickstephen.madmine.entities.PlayerChar;
 import com.nickstephen.madmine.util.Position;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -13,7 +16,7 @@ public final class Map {
     // NOTE: The matrix for the map is in the form [height][width] for clarity.
     // TODO: Complete the map class.
 
-    static final int MAP_MAGIC_NO = 0x54474D50;
+    static final int MAP_MAGIC_NO = 0x54474D50; // TGMP //
 
     private static final int BLOCK_DIVISOR = 3;
 
@@ -23,19 +26,21 @@ public final class Map {
     private final int mScoreTrophy;      // Score required to get the trophy for this map.
                                         // The number of squares up and across that the blocks will be divided into.
                                         // NOTE: This is also the number of steps in the animation to move an entity.
-    int mMapVersionNo;
-    PlayerChar mPlayer;
-    List<GenericEntity> mEntities;
+
+    private final char mMapVersionNo;
+    private List<GenericEntity> mEntities;
+    private PlayerChar mPlayer;
 
     GenericEntity[][][][] mLayout;
 
     // Constructor for the map class.
-    Map(int width, int height, int scoreFinish, int scoreGoal){
+    Map(int width, int height, int scoreFinish, int scoreGoal, char version){
         // Set the width, height, and score thresholds for the map.
         mMapWidth = width;
         mMapHeight = height;
         mScoreDoorOpen = scoreFinish;
         mScoreTrophy = scoreGoal;
+        mMapVersionNo = version;
 
         // Create the correctly sized map array as per above note.
         mLayout = new GenericEntity[mMapHeight][mMapWidth][BLOCK_DIVISOR][BLOCK_DIVISOR];
@@ -96,17 +101,38 @@ public final class Map {
         }
     }
 
+    public final boolean setPlayer(@NotNull PlayerChar player) {
+        if (mPlayer != null) {
+            return false;
+        } else {
+            mPlayer = player;
+            return true;
+        }
+    }
+
+    boolean setup(@NotNull List<GenericEntity> entities) {
+        mEntities = entities;
+        if (mPlayer == null) {
+            Twig.debug("MapLoader", "No player character detected!");
+            return false;
+        }
+        return true;
+    }
+
     // Getters for the map class.
-    public int getMapWidth(){
+    public final int getMapWidth(){
         return mMapWidth;
     }
-    public int getMapHeight(){
+
+    public final int getMapHeight(){
         return mMapHeight;
     }
-    public int getScoreDoorOpen(){
+
+    public final int getScoreDoorOpen(){
         return mScoreDoorOpen;
     }
-    public int getScoreTrophy(){
+
+    public final int getScoreTrophy(){
         return mScoreTrophy;
     }
 

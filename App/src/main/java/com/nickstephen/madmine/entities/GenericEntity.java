@@ -1,28 +1,74 @@
 package com.nickstephen.madmine.entities;
 
+import com.nickstephen.madmine.map.Map;
 import com.nickstephen.madmine.util.Position;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by Ben on 22/04/2014.
  */
 public class GenericEntity {
-    private static final short PLAYER = 0x1;
+    private static final short BLOCK = 0x1;
+    private static final short PLAYER = 0x2;
+    private static final short ENEMY = 0x4;
+    private static final short ITEM = 0x8;
 
+    public static GenericEntity create(@NotNull Map map, int x, int y, short type, short subtype) {
+        switch (type) {
+            case BLOCK:
+                switch (subtype) {
+                    case Wall.SUBTYPE:
+                        return new Wall(map, x, y);
 
-    public static GenericEntity create(int x, int y, short type, short subtype) {
+                    case Dirt.SUBTYPE:
+                    default:
+                        return new Dirt(map, x, y);
+                }
+
+            case PLAYER:
+                PlayerChar player = new PlayerChar(map, x, y);
+                if (map.setPlayer(player)) {
+                    return player;
+                } else {
+                    return null;
+                }
+
+            case ENEMY:
+                switch (subtype) {
+                    case Spider.SUBTYPE:
+                    default:
+                        return new Spider(map, x, y);
+                }
+
+            case ITEM:
+                switch (subtype) {
+                    case Bomb.SUBTYPE:
+                        return new Bomb(map, x, y);
+
+                    case Diamond.SUBTYPE:
+                        return new Diamond(map, x, y);
+
+                    case Boulder.SUBTYPE:
+                        return new Boulder(map, x, y);
+
+                    case Gem.SUBTYPE:
+                    default:
+                        return new Gem(map, x, y);
+                }
+
+        }
         return null;
-    }
-
-    public static PlayerChar createPlayer(int x, int y, short type) {
-        return null;
-    }
-
-    public static boolean isPlayer(short type) {
-        return type == PLAYER;
     }
 
     // TODO: Stevo, should this be protected or private?
     protected Position mPos;
+    protected final Map mMap;
+
+    GenericEntity(@NotNull Map map, int x, int y) {
+        mMap = map;
+        mPos = new Position(x, y);
+    }
 
     /**
      * Moves an entity to a new position by altering the position value of the entity and also by altering the map to account for its movement.

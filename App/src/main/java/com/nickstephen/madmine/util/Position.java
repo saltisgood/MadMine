@@ -32,13 +32,4 @@ public class Position {
         }
         return null;
     }
-
-    public boolean emptySpace(){
-        // TODO: I'm pretty sure this should be in the map class so it can be deleted.
-        // If the space is empty:
-            // Return true
-        // Else
-            // Return false
-        return false;
-    }
 }

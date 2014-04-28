@@ -1,18 +1,27 @@
 package com.nickstephen.madmine.entities;
 
 
+import com.nickstephen.madmine.map.Map;
 import com.nickstephen.madmine.util.Direction;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by Ben on 22/04/2014.
  */
 public class Dirt extends GenericEntity {
+    static final short SUBTYPE = 0x1;
+
     protected boolean mSpaceUp = false;
     protected boolean mSpaceRight = false;
     protected boolean mSpaceDown = false;
     protected boolean mSpaceLeft = false;
 
     // TODO: Dirt class.
+
+    Dirt(@NotNull Map map, int x, int y) {
+        super (map, x, y);
+    }
 
     @Override
     public void onTick(){
@@ -26,14 +35,18 @@ public class Dirt extends GenericEntity {
      */
     private void refreshDirt(){
         // TODO: Maybe just put this inside onTick() in dirt.java given that it might be all it does as per Stevo.
-        if ((this.mPos.getRelPos(Direction.UP).emptySpace() != mSpaceUp))
+        if (mMap.isSpaceEmpty(mPos.getRelPos(Direction.UP)) != mSpaceUp) {
             mSpaceUp = !mSpaceUp;
-        if ((this.mPos.getRelPos(Direction.RIGHT).emptySpace() != mSpaceRight))
+        }
+        if (mMap.isSpaceEmpty(mPos.getRelPos(Direction.RIGHT)) != mSpaceRight) {
             mSpaceRight = !mSpaceRight;
-        if ((this.mPos.getRelPos(Direction.DOWN).emptySpace() != mSpaceDown))
+        }
+        if (mMap.isSpaceEmpty(mPos.getRelPos(Direction.DOWN)) != mSpaceDown) {
             mSpaceDown = !mSpaceDown;
-        if ((this.mPos.getRelPos(Direction.LEFT).emptySpace() != mSpaceLeft))
+        }
+        if (mMap.isSpaceEmpty(mPos.getRelPos(Direction.LEFT)) != mSpaceLeft) {
             mSpaceLeft = !mSpaceLeft;
+        }
 
         // TODO: Add some sort of refresh for the dirt sprite - only after all four of those if statements have been executed.
     }

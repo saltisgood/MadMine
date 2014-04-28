@@ -1,11 +1,20 @@
 package com.nickstephen.madmine.entities;
 
+import com.nickstephen.madmine.map.Map;
 import com.nickstephen.madmine.util.Position;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by Ben on 22/04/2014.
  */
 public class Spider extends GenericNPC{
+    static final short SUBTYPE = 0x1;
+
+    Spider(@NotNull Map map, int x, int y) {
+        super(map, x, y);
+    }
+
     @Override
     public void onTick(){
         // TODO: Kill player?  I think this is done elsewhere though so maybe not required here.
@@ -21,19 +30,14 @@ public class Spider extends GenericNPC{
          */
 
         // Sets the desired position to be the space directly in front of the spider.
-        Position desiredPos = this.mPos.getRelPos(mDirectionFacing);
-        // This is meant to check to see if the space can be moved into.
-        if (desiredPos.emptySpace()) {
+        Position desiredPos = mPos.getRelPos(mDirectionFacing);
+        if (mMap.isSpaceEmpty(desiredPos)) {
             // Moves the spider forward one block if there is room.
             move(desiredPos);
-        }
-        else {
+        } else {
             // If there is no room for the spider to move forwards, it turns pi/2 clockwise.
-            // TODO: Will this turn the spider, or do I have to go this.mDirectionFacing = this.mDirectionFacing.rotateClockwise()?
-            this.mDirectionFacing = this.mDirectionFacing.rotateClockwise();
+            mDirectionFacing = mDirectionFacing.rotateClockwise();
         }
-
-
     }
 
 }
