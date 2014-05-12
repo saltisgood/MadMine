@@ -9,6 +9,7 @@ import com.nickstephen.gamelib.opengl.Shape;
 import com.nickstephen.gamelib.opengl.layout.RootContainer;
 import com.nickstephen.lib.Twig;
 import com.nickstephen.madmine.content.MainScreen;
+import com.nickstephen.madmine.content.RootContent;
 import com.nickstephen.madmine.content.TitleScreen;
 import com.nickstephen.madmine.util.MineLoop;
 
@@ -57,12 +58,14 @@ public class Game extends com.nickstephen.gamelib.run.Game {
 
     public void setup(int width, int height) {
         super.setup(width, height);
-		
-        if (!mStarted) {
+
+        mActiveView = new RootContent(mContext, getSurface(), width, height);
+
+        /* if (!mStarted) {
             mActiveView = new TitleScreen(mContext, getSurface(), width, height);
         } else {
             mActiveView = new MainScreen(mContext, getSurface(), width, height);
-        }
+        } */
     }
 
     public @Nullable RootContainer getSwapView() {
@@ -73,36 +76,6 @@ public class Game extends com.nickstephen.gamelib.run.Game {
         Twig.debug("Game", "Start Game!");
         mStarted = true;
 
-        MineLoop.getInstanceUnsafe().cancelAnimations(true);
 
-        new AlphaAnimation(mActiveView, 1.0f, 0.0f).setAnimationEndListener(new IOnAnimationEnd() {
-            @Override
-            public void onAnimationEnd(Shape shape) {
-                synchronized (this) {
-                    List<Shape> shapes = mActiveView.getChildren();
-                    int len = shapes.size();
-                    for (int i = 0; i < len; i++) {
-                        MineLoop.getInstanceUnsafe().removeAnimationsOfShape(shapes.get(i));
-                    }
-
-                    final Shape view = mActiveView;
-                    getSurface().queueEvent(new Runnable() {
-                        @Override
-                        public void run() {
-                            view.destroy();
-                        }
-                    });
-                    //mActiveView.destroy();
-                    mActiveView = null;
-                }
-
-                addGLThreadAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        mActiveView = new MainScreen(mContext, getSurface(), getWidth(), getHeight());
-                    }
-                });
-            }
-        }).start();
     }
 }

@@ -1,5 +1,10 @@
 package com.nickstephen.madmine.entities;
 
+import android.content.Context;
+
+import com.nickstephen.gamelib.opengl.Shape;
+import com.nickstephen.gamelib.opengl.interfaces.IDraw;
+import com.nickstephen.gamelib.opengl.layout.Container;
 import com.nickstephen.madmine.map.Map;
 import com.nickstephen.madmine.util.Position;
 
@@ -8,13 +13,13 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Created by Ben on 22/04/2014.
  */
-public class GenericEntity {
+public abstract class GenericEntity implements IDraw {
     private static final short BLOCK = 0x1;
     private static final short PLAYER = 0x2;
     private static final short ENEMY = 0x4;
     private static final short ITEM = 0x8;
 
-    public static GenericEntity create(@NotNull Map map, int x, int y, short type, short subtype) {
+    public static GenericEntity create(@NotNull Context context, @NotNull Container parent, @NotNull Map map, int x, int y, short type, short subtype) {
         switch (type) {
             case BLOCK:
                 switch (subtype) {
@@ -27,7 +32,7 @@ public class GenericEntity {
                 }
 
             case PLAYER:
-                PlayerChar player = new PlayerChar(map, x, y);
+                PlayerChar player = new PlayerChar(context, parent, map, x, y);
                 if (map.setPlayer(player)) {
                     return player;
                 } else {
@@ -101,4 +106,12 @@ public class GenericEntity {
     public Position getPos(){
         return mPos;
     }
+
+    @Override
+    public void draw(@NotNull float[] vpMatrix) {
+        // TODO: Remove this and override in subclasses to make abstract, or do something else
+    }
+
+    // TODO: Make abstract
+    public Shape getShape() { return null; }
 }

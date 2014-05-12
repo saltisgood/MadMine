@@ -2,11 +2,14 @@ package com.nickstephen.madmine.map;
 
 import android.content.Context;
 
+import com.nickstephen.gamelib.opengl.layout.Container;
 import com.nickstephen.lib.Twig;
 import com.nickstephen.lib.misc.BitConverter;
 import com.nickstephen.madmine.entities.GenericEntity;
 import com.nickstephen.madmine.entities.PlayerChar;
 import com.nickstephen.madmine.util.BufferedStream;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,7 +22,7 @@ import java.util.List;
 public class MapLoader {
     private static final int SIZEOF_INTEGER = 4;
 
-    public static Map fromFile(Context context, String fileName) throws IOException {
+    public static Map fromFile(@NotNull Context context, @NotNull Container parent, @NotNull String fileName) throws IOException {
         BufferedStream fileStream;
 
         try {
@@ -56,7 +59,7 @@ public class MapLoader {
 
             char scoreTrophy = fileStream.readChar();
 
-            map = new Map(width, height, scoreFinish, scoreTrophy, version);
+            map = new Map(context, parent, width, height, scoreFinish, scoreTrophy, version);
 
             char optional = fileStream.readChar(); // Give some space for future optional headers //
 
@@ -70,7 +73,7 @@ public class MapLoader {
                     short subtype = fileStream.readShort();
 
                     if (entity != 0) { // Not empty space. //
-                        GenericEntity entityObj = GenericEntity.create(map, x, y, entity, subtype);
+                        GenericEntity entityObj = GenericEntity.create(context, parent, map, x, y, entity, subtype);
 
                         if (entityObj == null) {
                             Twig.debug("MapLoader", "Error creating entity!");

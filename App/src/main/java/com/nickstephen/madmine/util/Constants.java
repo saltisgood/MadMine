@@ -15,4 +15,10 @@ public final class Constants {
         public static final String TEST = "testsprite.png";
         public static final String IMG = "sprites.png";
     }
+
+    public final static class Maps {
+        private Maps() {}
+
+        public static final String TEST = "test.map";
+    }
 }

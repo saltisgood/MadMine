@@ -1,5 +1,11 @@
 package com.nickstephen.madmine.map;
 
+import android.content.Context;
+
+import com.nickstephen.gamelib.opengl.Shape;
+import com.nickstephen.gamelib.opengl.interfaces.IContainerDraw;
+import com.nickstephen.gamelib.opengl.interfaces.IDraw;
+import com.nickstephen.gamelib.opengl.layout.Container;
 import com.nickstephen.lib.Twig;
 import com.nickstephen.madmine.entities.GenericEntity;
 import com.nickstephen.madmine.entities.PlayerChar;
@@ -12,29 +18,25 @@ import java.util.List;
 /**
  * Created by Ben on 24/04/2014.
  */
-public final class Map {
+public final class Map implements IContainerDraw {
     // NOTE: The matrix for the map is in the form [height][width] for clarity.
     // TODO: Complete the map class.
 
     static final int MAP_MAGIC_NO = 0x54474D50; // TGMP //
 
-    private static final int BLOCK_DIVISOR = 3;
-
     private final int mMapWidth;         // Number of blocks wide the map is.
     private final int mMapHeight;        // Number of blocks high the map is.
     private final int mScoreDoorOpen;    // Score required to open the door.
     private final int mScoreTrophy;      // Score required to get the trophy for this map.
-                                        // The number of squares up and across that the blocks will be divided into.
-                                        // NOTE: This is also the number of steps in the animation to move an entity.
 
     private final char mMapVersionNo;
     private List<GenericEntity> mEntities;
     private PlayerChar mPlayer;
 
-    GenericEntity[][][][] mLayout;
+    private Container mDrawContainer;
 
     // Constructor for the map class.
-    Map(int width, int height, int scoreFinish, int scoreGoal, char version){
+    Map(@NotNull Context context, @NotNull Container parent, int width, int height, int scoreFinish, int scoreGoal, char version){
         // Set the width, height, and score thresholds for the map.
         mMapWidth = width;
         mMapHeight = height;
@@ -42,8 +44,9 @@ public final class Map {
         mScoreTrophy = scoreGoal;
         mMapVersionNo = version;
 
-        // Create the correctly sized map array as per above note.
-        mLayout = new GenericEntity[mMapHeight][mMapWidth][BLOCK_DIVISOR][BLOCK_DIVISOR];
+        //mDrawContainer = new Container(context, parent, width, height, 0, 0);
+        mDrawContainer = new Container(context, parent, 854, 480, 0, 0);
+
     }
 
     // Returns the class of entity present at a location if it is full - null otherwise.
@@ -55,7 +58,7 @@ public final class Map {
      */
     public GenericEntity whatIsHere(Position position){
         // TODO: Work out if this is even necessary or if it is a waste of space.
-        GenericEntity[][] block = this.mLayout[position.yPos][position.xPos];
+        /* GenericEntity[][] block = this.mLayout[position.yPos][position.xPos];
         GenericEntity topLeft = block[0][0];
         for (int i = 0; i < BLOCK_DIVISOR; i++){
             for (int j = 0; j < BLOCK_DIVISOR; j++){
@@ -63,7 +66,8 @@ public final class Map {
                     return null;
             }
         }
-        return topLeft;
+        return topLeft; */
+        return null;
     }
 
     public boolean moveEntity(GenericEntity entity, Position oldPos, Position newPos){
@@ -84,21 +88,21 @@ public final class Map {
     // Even if we end up having spiders able to collide and reverse - consider the case of
     // having rocks falling into each other and bouncing off.
     public boolean isSpaceEmpty(Position position){
-        for (int i = 0; i < BLOCK_DIVISOR; i++){
+        /* for (int i = 0; i < BLOCK_DIVISOR; i++){
             for (int j = 0; j < BLOCK_DIVISOR; j++){
                 if (this.mLayout[position.yPos][position.xPos][i][j] != null)
                     return false;
             }
-        }
+        } */
         return true;
     }
 
     void setEntityAtPosition(GenericEntity entity, int x, int y) {
-        for (int i = 0; i < BLOCK_DIVISOR; i++) {
+        /* for (int i = 0; i < BLOCK_DIVISOR; i++) {
             for (int j = 0; j < BLOCK_DIVISOR; j++) {
                 mLayout[y][x][i][j] = entity;
             }
-        }
+        } */
     }
 
     public final boolean setPlayer(@NotNull PlayerChar player) {
@@ -116,7 +120,22 @@ public final class Map {
             Twig.debug("MapLoader", "No player character detected!");
             return false;
         }
+
+        List<Shape> children = mDrawContainer.getChildren();
+        for (GenericEntity ent : entities) {
+            children.add(ent.getShape());
+        }
+
         return true;
+    }
+
+    @Override
+    public void draw(@NotNull float[] projMatrix, @NotNull float[] viewMatrix) {
+        mDrawContainer.draw(projMatrix, viewMatrix);
+    }
+
+    public Container getContainer() {
+        return mDrawContainer;
     }
 
     // Getters for the map class.
@@ -136,4 +155,7 @@ public final class Map {
         return mScoreTrophy;
     }
 
+    public final char getMapVersion() {
+        return mMapVersionNo;
+    }
 }
