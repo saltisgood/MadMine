@@ -1,5 +1,8 @@
 package com.nickstephen.madmine.entities;
 
+import android.content.Context;
+
+import com.nickstephen.gamelib.opengl.layout.Container;
 import com.nickstephen.madmine.map.Map;
 import com.nickstephen.madmine.util.Direction;
 
@@ -13,7 +16,7 @@ public class Bomb extends GenericItem {
 
     private boolean mPrimed = false;
 
-    Bomb(@NotNull Map map, int x, int y) {
+    Bomb(@NotNull Context context, @NotNull Container parent, @NotNull Map map, int x, int y) {
         super(map, x, y);
     }
 

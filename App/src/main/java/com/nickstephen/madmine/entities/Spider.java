@@ -1,5 +1,8 @@
 package com.nickstephen.madmine.entities;
 
+import android.content.Context;
+
+import com.nickstephen.gamelib.opengl.layout.Container;
 import com.nickstephen.madmine.map.Map;
 import com.nickstephen.madmine.util.Position;
 
@@ -11,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 public class Spider extends GenericNPC{
     static final short SUBTYPE = 0x1;
 
-    Spider(@NotNull Map map, int x, int y) {
+    Spider(@NotNull Context context, @NotNull Container parent, @NotNull Map map, int x, int y) {
         super(map, x, y);
     }
 

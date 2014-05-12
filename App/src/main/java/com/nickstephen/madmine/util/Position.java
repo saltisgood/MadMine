@@ -32,4 +32,48 @@ public class Position {
         }
         return null;
     }
+
+    private float getPixelPosition(int currentPosition, int maxPosition) {
+        int mid = maxPosition / 2;
+        float dist;
+        int diff = currentPosition - mid;
+        if (maxPosition % 2 == 0) {
+            dist = diff + 0.5f;
+        } else {
+            if (diff == 0) {
+                dist = 0.f;
+            } else {
+                dist = diff + ((diff < 0) ? -0.5f : 0.5f);
+            }
+        }
+
+        return dist * ViewScaling.getBlockPixelSize();
+    }
+
+    public float getPixelPositionX(int mapWidth) {
+        return getPixelPosition(xPos, mapWidth);
+    }
+
+    public float getPixelPositionY(int mapHeight) {
+        return -getPixelPosition(yPos, mapHeight);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = result * 37 + xPos;
+        result = result * 23 + yPos;
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Position) {
+            Position p = (Position)o;
+            if (xPos == p.xPos && yPos == p.yPos) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

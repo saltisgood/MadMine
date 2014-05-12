@@ -1,5 +1,8 @@
 package com.nickstephen.madmine.entities;
 
+import android.content.Context;
+
+import com.nickstephen.gamelib.opengl.layout.Container;
 import com.nickstephen.madmine.map.Map;
 
 import org.jetbrains.annotations.NotNull;
@@ -12,7 +15,7 @@ public class Wall extends GenericEntity {
 
     // TODO: Wall class.
 
-    Wall(@NotNull Map map, int x, int y) {
+    Wall(@NotNull Context context, @NotNull Container parent, @NotNull Map map, int x, int y) {
         super(map, x, y);
     }
 }

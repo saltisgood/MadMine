@@ -10,6 +10,7 @@ import com.nickstephen.lib.Twig;
 import com.nickstephen.madmine.entities.GenericEntity;
 import com.nickstephen.madmine.entities.PlayerChar;
 import com.nickstephen.madmine.util.Position;
+import com.nickstephen.madmine.util.ViewScaling;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -44,9 +45,7 @@ public final class Map implements IContainerDraw {
         mScoreTrophy = scoreGoal;
         mMapVersionNo = version;
 
-        //mDrawContainer = new Container(context, parent, width, height, 0, 0);
-        mDrawContainer = new Container(context, parent, 854, 480, 0, 0);
-
+        mDrawContainer = new Container(context, parent, width * ViewScaling.getBlockPixelSize(), height * ViewScaling.getBlockPixelSize(), 0, 0);
     }
 
     // Returns the class of entity present at a location if it is full - null otherwise.

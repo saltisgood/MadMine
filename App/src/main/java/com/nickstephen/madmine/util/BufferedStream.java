@@ -1,5 +1,7 @@
 package com.nickstephen.madmine.util;
 
+import android.os.Build;
+
 import com.nickstephen.lib.misc.BitConverter;
 
 import org.jetbrains.annotations.NotNull;
@@ -46,26 +48,34 @@ public class BufferedStream {
     }
 
     private int read(int minSize) throws IOException {
-        int diff = mEndReadPos - mCurrentReadPos;
+        try {
+            int diff = mEndReadPos - mCurrentReadPos;
 
-        if (diff < minSize) {
-            if (diff != 0) {
-                System.arraycopy(mBuffer, mBufferPos, mBuffer, 0, diff);
+            if (diff < minSize) {
+                if (diff != 0) {
+                    System.arraycopy(mBuffer, mBufferPos, mBuffer, 0, diff);
+                }
+
+                mBufferPos = 0;
+                mStartReadPos = mCurrentReadPos;
+
+                int len = 0;
+                while ((diff + len) < minSize) {
+                    len += mInput.read(mBuffer, diff + len, mBufferSize - len - diff);
+                }
+
+                mEndReadPos += len;
             }
 
-            mBufferPos = 0;
-            mStartReadPos = mCurrentReadPos;
-
-            int len = 0;
-            while ((diff + len) < minSize) {
-                len += mInput.read(mBuffer, diff + len, mBufferSize - len - diff);
+            mCurrentReadPos += minSize;
+            return minSize;
+        } catch (IndexOutOfBoundsException e) {
+            if (Build.VERSION.SDK_INT >= 9) {
+                throw new IOException("Read past end of asset stream!", e);
+            } else {
+                throw new IOException("Read past end of asset stream!");
             }
-
-            mEndReadPos += len;
         }
-
-        mCurrentReadPos += minSize;
-        return minSize;
     }
 
     public byte readByte() throws IOException {

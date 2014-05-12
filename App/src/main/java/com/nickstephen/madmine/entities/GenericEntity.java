@@ -24,11 +24,11 @@ public abstract class GenericEntity implements IDraw {
             case BLOCK:
                 switch (subtype) {
                     case Wall.SUBTYPE:
-                        return new Wall(map, x, y);
+                        return new Wall(context, parent, map, x, y);
 
                     case Dirt.SUBTYPE:
                     default:
-                        return new Dirt(map, x, y);
+                        return new Dirt(context, parent, map, x, y);
                 }
 
             case PLAYER:
@@ -43,23 +43,23 @@ public abstract class GenericEntity implements IDraw {
                 switch (subtype) {
                     case Spider.SUBTYPE:
                     default:
-                        return new Spider(map, x, y);
+                        return new Spider(context, parent, map, x, y);
                 }
 
             case ITEM:
                 switch (subtype) {
                     case Bomb.SUBTYPE:
-                        return new Bomb(map, x, y);
+                        return new Bomb(context, parent, map, x, y);
 
                     case Diamond.SUBTYPE:
-                        return new Diamond(map, x, y);
+                        return new Diamond(context, parent, map, x, y);
 
                     case Boulder.SUBTYPE:
-                        return new Boulder(map, x, y);
+                        return new Boulder(context, parent, map, x, y);
 
                     case Gem.SUBTYPE:
                     default:
-                        return new Gem(map, x, y);
+                        return new Gem(context, parent, map, x, y);
                 }
 
         }
@@ -81,8 +81,29 @@ public abstract class GenericEntity implements IDraw {
      */
     public void move(Position newPosition){
         // Changes the entity's position.
-        this.mPos = newPosition;
-        // TODO: Interact with the map.
+        if (!mPos.equals(newPosition)) { // Only change positions if the position is different
+            this.mPos = newPosition;
+            onMove();
+            // TODO: Interact with the map.
+        }
+    }
+
+    public void moveX(int dx) {
+        if (dx != 0) {
+            mPos.xPos += dx;
+            onMove();
+        }
+    }
+
+    public void moveY(int dy) {
+        if (dy != 0) {
+            mPos.yPos += dy;
+            onMove();
+        }
+    }
+
+    protected void onMove() {
+
     }
 
     public void onTick(){
