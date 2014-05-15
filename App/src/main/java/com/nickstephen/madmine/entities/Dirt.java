@@ -8,7 +8,7 @@ import com.nickstephen.gamelib.opengl.Shape;
 import com.nickstephen.gamelib.opengl.layout.Container;
 import com.nickstephen.madmine.map.Map;
 import com.nickstephen.madmine.util.Constants;
-import com.nickstephen.madmine.util.Direction;
+import com.nickstephen.gamelib.util.Direction;
 import com.nickstephen.madmine.util.ViewScaling;
 
 import org.jetbrains.annotations.NotNull;

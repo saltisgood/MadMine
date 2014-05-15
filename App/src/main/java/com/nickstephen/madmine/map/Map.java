@@ -3,12 +3,15 @@ package com.nickstephen.madmine.map;
 import android.content.Context;
 
 import com.nickstephen.gamelib.opengl.Shape;
+import com.nickstephen.gamelib.opengl.gestures.GestureEvent;
+import com.nickstephen.gamelib.opengl.gestures.GestureFling;
+import com.nickstephen.gamelib.opengl.gestures.IOnGestureL;
 import com.nickstephen.gamelib.opengl.interfaces.IContainerDraw;
-import com.nickstephen.gamelib.opengl.interfaces.IDraw;
 import com.nickstephen.gamelib.opengl.layout.Container;
 import com.nickstephen.lib.Twig;
 import com.nickstephen.madmine.entities.GenericEntity;
 import com.nickstephen.madmine.entities.PlayerChar;
+import com.nickstephen.gamelib.util.Direction;
 import com.nickstephen.madmine.util.Position;
 import com.nickstephen.madmine.util.ViewScaling;
 
@@ -19,7 +22,7 @@ import java.util.List;
 /**
  * Created by Ben on 24/04/2014.
  */
-public final class Map implements IContainerDraw {
+public final class Map implements IContainerDraw, IOnGestureL {
     // NOTE: The matrix for the map is in the form [height][width] for clarity.
     // TODO: Complete the map class.
 
@@ -66,6 +69,13 @@ public final class Map implements IContainerDraw {
             }
         }
         return topLeft; */
+
+        for (GenericEntity e : mEntities) {
+            if (e.getPos().equals(position)) {
+                return e;
+            }
+        }
+
         return null;
     }
 
@@ -131,6 +141,45 @@ public final class Map implements IContainerDraw {
     @Override
     public void draw(@NotNull float[] projMatrix, @NotNull float[] viewMatrix) {
         mDrawContainer.draw(projMatrix, viewMatrix);
+    }
+
+    @Override
+    public void onGesture(@NotNull Shape shape, @NotNull GestureEvent e) {
+        if (e instanceof GestureFling) {
+            GestureFling gf = (GestureFling) e;
+
+            Position pos = mPlayer.getPos().getRelPos(gf.direction);
+            if (pos.xPos < 0 || pos.xPos >= mMapWidth || pos.yPos < 0 || pos.yPos >= mMapHeight) {
+                return;
+            }
+
+            GenericEntity ent = whatIsHere(pos);
+
+            if (ent != null) {
+                if (ent.canEntityMoveOnto(mPlayer)) {
+                    if (ent.collideWith(mPlayer)) {
+                        mEntities.remove(ent);
+                    }
+                } else {
+                    return;
+                }
+            }
+
+            switch (gf.direction) {
+                case DOWN:
+                    mPlayer.moveY(-1);
+                    break;
+                case UP:
+                    mPlayer.moveY(1);
+                    break;
+                case LEFT:
+                    mPlayer.moveX(-1);
+                    break;
+                case RIGHT:
+                    mPlayer.moveX(1);
+                    break;
+            }
+        }
     }
 
     public Container getContainer() {

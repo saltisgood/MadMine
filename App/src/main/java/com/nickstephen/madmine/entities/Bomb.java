@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.nickstephen.gamelib.opengl.layout.Container;
 import com.nickstephen.madmine.map.Map;
-import com.nickstephen.madmine.util.Direction;
+import com.nickstephen.gamelib.util.Direction;
 
 import org.jetbrains.annotations.NotNull;
 

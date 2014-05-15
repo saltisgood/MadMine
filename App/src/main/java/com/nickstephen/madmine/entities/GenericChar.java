@@ -1,7 +1,7 @@
 package com.nickstephen.madmine.entities;
 
 import com.nickstephen.madmine.map.Map;
-import com.nickstephen.madmine.util.Direction;
+import com.nickstephen.gamelib.util.Direction;
 
 import org.jetbrains.annotations.NotNull;
 

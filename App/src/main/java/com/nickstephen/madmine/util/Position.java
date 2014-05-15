@@ -1,5 +1,7 @@
 package com.nickstephen.madmine.util;
 
+import com.nickstephen.gamelib.util.Direction;
+
 import org.jetbrains.annotations.NotNull;
 
 /**

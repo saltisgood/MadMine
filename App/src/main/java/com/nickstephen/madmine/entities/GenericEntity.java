@@ -120,6 +120,10 @@ public abstract class GenericEntity implements IDraw {
     }
 
 
+    public boolean collideWith(@NotNull GenericEntity entity) {
+        return false;
+    }
+
     /**
      * A getter for the position of the entity.
      * @return The Position value of the entity.

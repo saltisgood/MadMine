@@ -3,6 +3,7 @@ package com.nickstephen.madmine.content;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 
+import com.nickstephen.gamelib.opengl.gestures.GestureEvent;
 import com.nickstephen.gamelib.opengl.layout.RootContainer;
 import com.nickstephen.gamelib.opengl.widget.Square;
 import com.nickstephen.lib.Twig;
@@ -35,5 +36,14 @@ public class RootContent extends RootContainer {
         super.draw(projMatrix, viewMatrix);
 
         mMap.draw(projMatrix, viewMatrix);
+    }
+
+    @Override
+    protected boolean onInterceptGestureEvent(@NotNull GestureEvent e) {
+        if (mMap != null) {
+            mMap.onGesture(this, e);
+            return true;
+        }
+        return super.onInterceptGestureEvent(e);
     }
 }
