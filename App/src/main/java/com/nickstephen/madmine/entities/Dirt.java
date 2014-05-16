@@ -73,4 +73,22 @@ public class Dirt extends GenericEntity {
     protected void onMove() {
         mShape.moveTo(mPos.getPixelPositionX(mMap.getMapWidth()), mPos.getPixelPositionY(mMap.getMapHeight()));
     }
+
+    @Override
+    public boolean canEntityMoveOnto(GenericEntity entity) {
+        if (entity instanceof PlayerChar) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean collideWith(@NotNull GenericEntity entity) {
+        if (entity instanceof PlayerChar) {
+            mShape.getParent().getChildren().remove(mShape);
+            return true;
+        }
+        return super.collideWith(entity);
+    }
 }

@@ -73,7 +73,7 @@ public class MapLoader {
                     short subtype = fileStream.readShort();
 
                     if (entity != 0) { // Not empty space. //
-                        GenericEntity entityObj = GenericEntity.create(context, parent, map, x, y, entity, subtype);
+                        GenericEntity entityObj = GenericEntity.create(context, map.getContainer(), map, x, y, entity, subtype);
 
                         if (entityObj == null) {
                             Twig.debug("MapLoader", "Error creating entity!");
