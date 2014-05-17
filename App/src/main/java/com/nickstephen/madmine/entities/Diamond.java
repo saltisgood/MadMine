@@ -23,8 +23,8 @@ public class Diamond extends GenericItem {
     Diamond(@NotNull Context context, @NotNull Container parent, @NotNull Map map, int x, int y) {
         super(map, x, y);
 
-        mShape = new AnimatedSprite(context, parent, Constants.Textures.IMG, ViewScaling.getBlockPixelSize(), ViewScaling.getBlockPixelSize(), 5, 5);
-        mShape.gotoFrame(3);
+        mShape = new AnimatedSprite(context, parent, Constants.Textures.IMG, ViewScaling.getBlockPixelSize(), ViewScaling.getBlockPixelSize(), 4, 4);
+        mShape.gotoFrame(1);
         onMove();
     }
 
