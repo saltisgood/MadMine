@@ -1,0 +1,23 @@
+Specifications for the Map File Format:
+
+1. File extension - .map. Cause why not amirite?
+2. Byte order - Big endian. As far as I'm aware this is how Java also stores it, but I'm a bit iffy about that. Certainly if you look at it in hex, the way it appears in code is the same as it appears in the file.
+3. File format:
+
+HEADER
+	Address							Data type					Name
+	0x0								Signed int (32 bit)			Magic number. 0x54474D50. Confirms that this is a map file. 
+	0x4								Unsigned char (16 bit)		Version number. The minimum version of the program required to use this map. Useful if there are downloadable or user made maps.
+	0x6								Unsigned char (16 bit)		Width of map grid. 
+	0x8								Unsigned char (16 bit)		Height of map grid.
+	0xA								Unsigned char (16 bit)		Finish score. Score required to open the exit.
+	0xC								Unsigned char (16 bit)		Trophy score. Score required to properly beat the level. Could this just be 100%???
+	0xE								Unsigned char (16 bit)		Number of optional fields.
+	0x10 - 0x10 + (4 * optionals)	Signed int (32 bit)			Optional fields. These are considered ints but could be just be any kind of data cast to ints. Can be figured out once we find a use for it.
+
+MAP DATA
+	Address (relative to end of HEADER)		Data type				Name
+	0x0										Signed int (16 bit)		Entity type enum. e.g. Player, Wall, Enemy, Item
+	0x2										Signed int (16 bit)		Sub-entity type enum. e.g. Dirt, Brick or Diamond, Bomb.
+	
+The map data for each grid spot is 4 bytes long and is repeated for every grid block running width first then height. (i.e. (0,0),(0,1),(0,2),(1,0),(1,1),(1,2)...)
