@@ -2,9 +2,13 @@ package com.nickstephen.madmine.entities;
 
 import android.content.Context;
 
+import com.nickstephen.gamelib.opengl.AnimatedSprite;
+import com.nickstephen.gamelib.opengl.Shape;
 import com.nickstephen.gamelib.opengl.layout.Container;
 import com.nickstephen.madmine.map.Map;
 import com.nickstephen.gamelib.util.Direction;
+import com.nickstephen.madmine.util.Constants;
+import com.nickstephen.madmine.util.ViewScaling;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -16,8 +20,14 @@ public class Bomb extends GenericItem {
 
     private boolean mPrimed = false;
 
-    Bomb(@NotNull Context context, @NotNull Container parent, @NotNull Map map, int x, int y) {
+    Bomb(@NotNull Context context, @NotNull Map map, int x, int y) {
         super(map, x, y);
+
+        mShape = new AnimatedSprite(context, map.getContainer(), Constants.Textures.IMG,
+                ViewScaling.getBlockPixelSize(), ViewScaling.getBlockPixelSize(),
+                4, 4);
+        ((AnimatedSprite)mShape).gotoFrame(8);
+        onMove();
     }
 
     /**

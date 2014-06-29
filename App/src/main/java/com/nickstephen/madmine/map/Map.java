@@ -9,6 +9,7 @@ import com.nickstephen.gamelib.opengl.gestures.IOnGestureL;
 import com.nickstephen.gamelib.opengl.interfaces.IContainerDraw;
 import com.nickstephen.gamelib.opengl.layout.Container;
 import com.nickstephen.lib.Twig;
+import com.nickstephen.madmine.entities.Exit;
 import com.nickstephen.madmine.entities.GenericEntity;
 import com.nickstephen.madmine.entities.PlayerChar;
 import com.nickstephen.gamelib.util.Direction;
@@ -36,6 +37,7 @@ public final class Map implements IContainerDraw, IOnGestureL {
     private final char mMapVersionNo;
     private List<GenericEntity> mEntities;
     private PlayerChar mPlayer;
+    private Exit mExit;
 
     private Container mDrawContainer;
 
@@ -119,6 +121,15 @@ public final class Map implements IContainerDraw, IOnGestureL {
             return false;
         } else {
             mPlayer = player;
+            return true;
+        }
+    }
+
+    public final boolean setExit(@NotNull Exit exit) {
+        if (mExit != null) {
+            return false;
+        } else {
+            mExit = exit;
             return true;
         }
     }

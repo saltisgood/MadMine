@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Created by Ben on 23/04/2014.
  */
-public class GenericItem extends GenericEntity{
+public abstract class GenericItem extends GenericEntity{
     // TODO: Stevo make sure this is valid.
 
     GenericItem(@NotNull Map map, int x, int y) {

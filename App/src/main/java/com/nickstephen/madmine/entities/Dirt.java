@@ -24,15 +24,13 @@ public class Dirt extends GenericEntity {
     protected boolean mSpaceDown = false;
     protected boolean mSpaceLeft = false;
 
-    protected AnimatedSprite mShape;
-
     // TODO: Dirt class.
 
-    Dirt(@NotNull Context context, @NotNull Container parent, @NotNull Map map, int x, int y) {
+    Dirt(@NotNull Context context, @NotNull Map map, int x, int y) {
         super (map, x, y);
 
-        mShape = new AnimatedSprite(context, parent, Constants.Textures.IMG, ViewScaling.getBlockPixelSize(), ViewScaling.getBlockPixelSize(), 4, 4);
-        mShape.gotoFrame(5);
+        mShape = new AnimatedSprite(context, map.getContainer(), Constants.Textures.IMG, ViewScaling.getBlockPixelSize(), ViewScaling.getBlockPixelSize(), 4, 4);
+        ((AnimatedSprite)mShape).gotoFrame(5);
         onMove();
     }
 
@@ -62,16 +60,6 @@ public class Dirt extends GenericEntity {
         }
 
         // TODO: Add some sort of refresh for the dirt sprite - only after all four of those if statements have been executed.
-    }
-
-    @Override
-    public Shape getShape() {
-        return mShape;
-    }
-
-    @Override
-    protected void onMove() {
-        mShape.moveTo(mPos.getPixelPositionX(mMap.getMapWidth()), mPos.getPixelPositionY(mMap.getMapHeight()));
     }
 
     @Override

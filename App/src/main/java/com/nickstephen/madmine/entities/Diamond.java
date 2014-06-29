@@ -18,23 +18,11 @@ public class Diamond extends GenericItem {
     static final short SUBTYPE = 0x2;
     // TODO: Diamond class.
 
-    protected AnimatedSprite mShape;
-
-    Diamond(@NotNull Context context, @NotNull Container parent, @NotNull Map map, int x, int y) {
+    Diamond(@NotNull Context context, @NotNull Map map, int x, int y) {
         super(map, x, y);
 
-        mShape = new AnimatedSprite(context, parent, Constants.Textures.IMG, ViewScaling.getBlockPixelSize(), ViewScaling.getBlockPixelSize(), 4, 4);
-        mShape.gotoFrame(1);
+        mShape = new AnimatedSprite(context, map.getContainer(), Constants.Textures.IMG, ViewScaling.getBlockPixelSize(), ViewScaling.getBlockPixelSize(), 4, 4);
+        ((AnimatedSprite)mShape).gotoFrame(1);
         onMove();
-    }
-
-    @Override
-    public Shape getShape() {
-        return mShape;
-    }
-
-    @Override
-    protected void onMove() {
-        mShape.moveTo(mPos.getPixelPositionX(mMap.getMapWidth()), mPos.getPixelPositionY(mMap.getMapHeight()));
     }
 }
