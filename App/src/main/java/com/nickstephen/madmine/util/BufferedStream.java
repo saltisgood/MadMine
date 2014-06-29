@@ -1,5 +1,7 @@
 package com.nickstephen.madmine.util;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.os.Build;
 
 import com.nickstephen.lib.misc.BitConverter;
@@ -47,6 +49,7 @@ public class BufferedStream {
         mInput.close();
     }
 
+    @SuppressLint("NewApi")
     private int read(int minSize) throws IOException {
         try {
             int diff = mEndReadPos - mCurrentReadPos;
