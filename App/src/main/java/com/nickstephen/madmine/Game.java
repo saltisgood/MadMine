@@ -27,7 +27,7 @@ public class Game extends com.nickstephen.gamelib.run.Game {
         if (sInstance == null) {
             sInstance = new Game(context);
         } else {
-            ((Game)sInstance).setContext(context);
+            ((Game) sInstance).setContext(context);
         }
         return (Game)sInstance;
     }
@@ -37,19 +37,14 @@ public class Game extends com.nickstephen.gamelib.run.Game {
     }
 
     private boolean mStarted = false;
-    private Context mContext;
     private RootContainer mSwapView;
 
     protected Game(@NotNull Context context) {
-        mContext = context;
+        super(context);
     }
 
-    private void setContext(@NotNull Context context) {
-        mContext = context;
-    }
-
-    public void releaseContext() {
-        mContext = null;
+    protected void setContext(@NotNull Context context) {
+        super.setContext(context);
     }
 
     public boolean hasStarted() {

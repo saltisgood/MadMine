@@ -25,4 +25,26 @@ public class Diamond extends GenericItem {
         ((AnimatedSprite)mShape).gotoFrame(1);
         onMove();
     }
+
+    @Override
+    public boolean canEntityMoveOnto(GenericEntity entity) {
+        if (entity instanceof PlayerChar) {
+            return true;
+        }
+
+        return super.canEntityMoveOnto(entity);
+    }
+
+    @Override
+    public boolean collideWith(@NotNull GenericEntity entity) {
+        if (entity instanceof PlayerChar) {
+            mMap.collectDiamond();
+
+            mShape.getParent().getChildren().remove(mShape);
+
+            return true;
+        }
+
+        return false;
+    }
 }

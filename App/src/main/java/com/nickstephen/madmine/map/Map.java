@@ -1,6 +1,7 @@
 package com.nickstephen.madmine.map;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 
 import com.nickstephen.gamelib.opengl.Shape;
 import com.nickstephen.gamelib.opengl.gestures.GestureEvent;
@@ -8,11 +9,14 @@ import com.nickstephen.gamelib.opengl.gestures.GestureFling;
 import com.nickstephen.gamelib.opengl.gestures.IOnGestureL;
 import com.nickstephen.gamelib.opengl.interfaces.IContainerDraw;
 import com.nickstephen.gamelib.opengl.layout.Container;
+import com.nickstephen.gamelib.run.tasking.ITriggerTest;
+import com.nickstephen.gamelib.run.tasking.Trigger;
+import com.nickstephen.gamelib.util.Utilities;
 import com.nickstephen.lib.Twig;
 import com.nickstephen.madmine.entities.Exit;
 import com.nickstephen.madmine.entities.GenericEntity;
 import com.nickstephen.madmine.entities.PlayerChar;
-import com.nickstephen.gamelib.util.Direction;
+import com.nickstephen.madmine.util.MineLoop;
 import com.nickstephen.madmine.util.Position;
 import com.nickstephen.madmine.util.ViewScaling;
 
@@ -41,6 +45,13 @@ public final class Map implements IContainerDraw, IOnGestureL {
 
     private Container mDrawContainer;
 
+    private int mScore = 0;
+    private boolean mExited = false;
+
+    private final Trigger mDoorTrigger;
+    private final Trigger mTrophyTrigger;
+    private final Trigger mExitTrigger;
+
     // Constructor for the map class.
     Map(@NotNull Context context, @NotNull Container parent, int width, int height, int scoreFinish, int scoreGoal, char version){
         // Set the width, height, and score thresholds for the map.
@@ -51,16 +62,32 @@ public final class Map implements IContainerDraw, IOnGestureL {
         mMapVersionNo = version;
 
         mDrawContainer = new Container(context, parent, width * ViewScaling.getBlockPixelSize(), height * ViewScaling.getBlockPixelSize(), 0, 0);
-    }
 
-    // Returns the class of entity present at a location if it is full - null otherwise.
+        // Collected the required number of diamonds
+        mDoorTrigger = new Trigger(() -> {
+            if (mExit != null) {
+                mExit.open();
+            }
+
+            Utilities.toastMessageSafe("Can exit!", false);
+        }, () -> mScore >= mScoreDoorOpen);
+        MineLoop.getInstanceUnsafe().addTask(mDoorTrigger);
+
+        // Collected the trophy number of diamonds
+        mTrophyTrigger = new Trigger(() -> {}, () -> mScore >= mScoreTrophy);
+        MineLoop.getInstanceUnsafe().addTask(mTrophyTrigger);
+
+        // Exited the map
+        mExitTrigger = new Trigger(() -> {}, () -> mExited);
+        MineLoop.getInstanceUnsafe().addTask(mExitTrigger);
+    }
 
     /**
      * Checks if there is an entity that fully spans a block.
      * @param position The position to check.
      * @return The entity that spans the block, or null if no single entity spans the full block (or if it is empty).
      */
-    public GenericEntity whatIsHere(Position position){
+    public @Nullable GenericEntity whatIsHere(Position position){
         // TODO: Work out if this is even necessary or if it is a waste of space.
         /* GenericEntity[][] block = this.mLayout[position.yPos][position.xPos];
         GenericEntity topLeft = block[0][0];
@@ -92,8 +119,6 @@ public final class Map implements IContainerDraw, IOnGestureL {
         }
         return false;
     }
-
-
 
     // Checks if a space is completely empty, mainly for NPC AI purposes.
     // Even if we end up having spiders able to collide and reverse - consider the case of
@@ -191,6 +216,15 @@ public final class Map implements IContainerDraw, IOnGestureL {
                     break;
             }
         }
+    }
+
+    public void collectDiamond() {
+        ++mScore;
+    }
+
+    public void exit() {
+        mExited = true;
+        Utilities.toastMessageSafe("has left the mine!", false);
     }
 
     public Container getContainer() {
