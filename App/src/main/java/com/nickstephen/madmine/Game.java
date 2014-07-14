@@ -76,7 +76,10 @@ public class Game extends com.nickstephen.gamelib.run.Game {
         mSwapView = newScreen;
         new TranslationAnimation(mActiveView, 0.f, getWidth(), 0.f, 0.f).start();
         //MineLoop.getInstanceUnsafe().addAnimation(new TranslationAnimation(mActiveView, 0.f, getWidth(), 0.f, 0.f));
-        new TranslationAnimation(mSwapView, -getWidth(), 0.f, 0.f, 0.f).setAnimationEndListener(shape1 -> mActiveView = mSwapView).start();
+        new TranslationAnimation(mSwapView, -getWidth(), 0.f, 0.f, 0.f).setAnimationEndListener(swap -> {
+            mActiveView.destroy();
+            mActiveView = mSwapView;
+        }).start();
         //MineLoop.getInstanceUnsafe().addAnimation(new TranslationAnimation(mSwapView, - getWidth(), 0.f, 0.f, 0.f).setAnimationEndListener((Shape shape) -> { mActiveView = mSwapView; }));
     }
 }

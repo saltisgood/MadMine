@@ -45,4 +45,11 @@ public class RootContent extends RootContainer {
         }
         return super.onInterceptGestureEvent(e);
     }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+
+        mMap.getContainer().destroy();
+    }
 }

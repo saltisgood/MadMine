@@ -1,5 +1,6 @@
 package com.nickstephen.madmine;
 
+import android.opengl.GLSurfaceView;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -42,14 +43,6 @@ public class MainActivity extends FragmentActivity {
         mGameLoop = (MineLoop) MineLoop.init();
         Thread thread = new Thread(mGameLoop, "Game Thread");
         thread.start();
-
-        // Create a GLSurfaceView instance and set it
-        // as the ContentView for this Activity
-        mGLView = new OpenGLSurfaceView(this);
-        Renderer renderer = new MainRenderer(this, mGLView);
-        mGLView.init(renderer);
-
-        setContentView(mGLView);
     }
 
     /**
@@ -63,7 +56,10 @@ public class MainActivity extends FragmentActivity {
         // If your OpenGL application is memory intensive,
         // you should consider de-allocating objects that
         // consume significant memory here.
+
+
         mGLView.onPause();
+        mGLView = null;
 
         mGameLoop.pause();
     }
@@ -78,6 +74,15 @@ public class MainActivity extends FragmentActivity {
         // The following call resumes a paused rendering thread.
         // If you de-allocated graphic objects for onPause()
         // this is a good place to re-allocate them.
+        //mGLView.onResume();
+
+        // Create a GLSurfaceView instance and set it
+        // as the ContentView for this Activity
+        mGLView = new OpenGLSurfaceView(this);
+        Renderer renderer = new MainRenderer(this, mGLView);
+        mGLView.init(renderer);
+
+        setContentView(mGLView);
         mGLView.onResume();
 
         mGameLoop.resume();
@@ -87,9 +92,8 @@ public class MainActivity extends FragmentActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        Game.getInstanceUnsafe().releaseContext();
-
         mGameLoop.stop();
+        Game.getInstanceUnsafe().releaseContext();
     }
 
     @Override
