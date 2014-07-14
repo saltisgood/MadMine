@@ -13,6 +13,8 @@ import com.nickstephen.gamelib.run.tasking.ITriggerTest;
 import com.nickstephen.gamelib.run.tasking.Trigger;
 import com.nickstephen.gamelib.util.Utilities;
 import com.nickstephen.lib.Twig;
+import com.nickstephen.madmine.Game;
+import com.nickstephen.madmine.content.StartScreen;
 import com.nickstephen.madmine.entities.Exit;
 import com.nickstephen.madmine.entities.GenericEntity;
 import com.nickstephen.madmine.entities.PlayerChar;
@@ -78,7 +80,9 @@ public final class Map implements IContainerDraw, IOnGestureL {
         MineLoop.getInstanceUnsafe().addTask(mTrophyTrigger);
 
         // Exited the map
-        mExitTrigger = new Trigger(() -> {}, () -> mExited);
+        mExitTrigger = new Trigger(() -> {
+            Game.getInstanceUnsafe().returnToMenu();
+        }, () -> mExited);
         MineLoop.getInstanceUnsafe().addTask(mExitTrigger);
     }
 

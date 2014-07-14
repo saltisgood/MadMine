@@ -74,7 +74,8 @@ public class Dirt extends GenericEntity {
     @Override
     public boolean collideWith(@NotNull GenericEntity entity) {
         if (entity instanceof PlayerChar) {
-            mShape.getParent().getChildren().remove(mShape);
+            mShape.removeFromParent();
+            mShape.destroy();
             return true;
         }
         return super.collideWith(entity);

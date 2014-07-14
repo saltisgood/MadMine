@@ -5,7 +5,6 @@ import android.opengl.GLSurfaceView;
 
 import com.nickstephen.gamelib.opengl.gestures.GestureEvent;
 import com.nickstephen.gamelib.opengl.layout.RootContainer;
-import com.nickstephen.gamelib.opengl.widget.Square;
 import com.nickstephen.lib.Twig;
 import com.nickstephen.madmine.map.Map;
 import com.nickstephen.madmine.map.MapLoader;
@@ -32,7 +31,7 @@ public class RootContent extends RootContainer {
     }
 
     @Override
-    public void draw(float[] projMatrix, float[] viewMatrix) {
+    public void draw(@NotNull float[] projMatrix, @NotNull float[] viewMatrix) {
         super.draw(projMatrix, viewMatrix);
 
         mMap.draw(projMatrix, viewMatrix);

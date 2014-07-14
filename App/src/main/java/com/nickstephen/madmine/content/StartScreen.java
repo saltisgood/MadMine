@@ -5,12 +5,10 @@ import android.opengl.GLSurfaceView;
 
 import com.nickstephen.gamelib.anim.AlphaAnimation;
 import com.nickstephen.gamelib.anim.Animation;
+import com.nickstephen.gamelib.opengl.Polygon;
 import com.nickstephen.gamelib.opengl.Shape;
 import com.nickstephen.gamelib.opengl.layout.RootContainer;
 import com.nickstephen.gamelib.opengl.text.Text;
-import com.nickstephen.gamelib.opengl.widget.Circle;
-import com.nickstephen.gamelib.opengl.gestures.IOnClickL;
-import com.nickstephen.gamelib.opengl.widget.Triangle;
 import com.nickstephen.madmine.Game;
 import com.nickstephen.madmine.util.Constants;
 
@@ -27,19 +25,13 @@ public class StartScreen extends RootContainer {
         titleText.moveTo(0, height / 4.0f);
         this.mChildren.add(titleText);
 
-        Shape shape = new Circle(context, this, 100);
+        Shape shape = Polygon.createCircle(context, this, 100);
         shape.moveTo(0, height / -4.0f);
-        shape.setOnClickListener(new IOnClickL() {
-            @Override
-            public void onClick(Shape shape) {
-                Game.getInstanceUnsafe().start();
-            }
-        });
-        //new AlphaAnimation(shape, 1.0f, 0.5f).infiniteLoop().setLoopingStyle(Animation.LoopStyle.REVERSE)
-        //        .start();
+        shape.setOnClickListener(shape1 -> Game.getInstanceUnsafe().start());
         this.mChildren.add(shape);
 
-        shape = new Triangle(context, this, 0, height / -4.0f, 80);
+        shape = Polygon.createTriangle(context, this, 80.f);
+        shape.moveTo(0, height / -4.0f);
         shape.setColour(0.0f, 1.0f, 0.0f, 1.0f);
         new AlphaAnimation(shape, 1.0f, 0.5f).infiniteLoop().setLoopingStyle(Animation.LoopStyle.REVERSE)
                 .start();

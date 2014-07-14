@@ -39,8 +39,8 @@ public class Diamond extends GenericItem {
     public boolean collideWith(@NotNull GenericEntity entity) {
         if (entity instanceof PlayerChar) {
             mMap.collectDiamond();
-
-            mShape.getParent().getChildren().remove(mShape);
+            mShape.removeFromParent();
+            mShape.destroy();
 
             return true;
         }
