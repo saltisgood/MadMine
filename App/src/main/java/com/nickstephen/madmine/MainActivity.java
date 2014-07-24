@@ -11,6 +11,8 @@ import android.view.WindowManager;
 import com.nickstephen.gamelib.GeneralUtil;
 import com.nickstephen.gamelib.opengl.OpenGLSurfaceView;
 import com.nickstephen.gamelib.opengl.Renderer;
+import com.nickstephen.gamelib.opengl.text.Text;
+import com.nickstephen.madmine.util.Constants;
 import com.nickstephen.madmine.util.MineLoop;
 
 /**
@@ -81,6 +83,8 @@ public class MainActivity extends FragmentActivity {
         mGLView = new OpenGLSurfaceView(this);
         Renderer renderer = new MainRenderer(this, mGLView);
         mGLView.init(renderer);
+
+        Text.FontManager.setDefaultFont(new Text.Font("TestAlpha", new String[]{Constants.Textures.Alphabet1}));
 
         setContentView(mGLView);
         mGLView.onResume();

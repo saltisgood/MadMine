@@ -2,9 +2,7 @@ package com.nickstephen.madmine.entities;
 
 import android.content.Context;
 
-import com.nickstephen.gamelib.opengl.Shape;
-import com.nickstephen.gamelib.opengl.interfaces.IDraw;
-import com.nickstephen.gamelib.opengl.layout.Container;
+import com.nickstephen.gamelib.opengl.shapes.Shape;
 import com.nickstephen.madmine.map.Map;
 import com.nickstephen.madmine.util.Position;
 

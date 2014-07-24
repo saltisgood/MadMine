@@ -14,6 +14,7 @@ public final class Constants {
 
         public static final String TEST = "testsprite.png";
         public static final String IMG = "sprites.png";
+        public static final String Alphabet1 = "Alphabet-1.png";
     }
 
     public final static class Maps {

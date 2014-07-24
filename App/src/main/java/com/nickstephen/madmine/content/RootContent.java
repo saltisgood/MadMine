@@ -47,9 +47,18 @@ public class RootContent extends RootContainer {
     }
 
     @Override
-    public void destroy() {
-        super.destroy();
+    public void dispose() {
+        super.dispose();
 
-        mMap.getContainer().destroy();
+        mMap.getContainer().dispose();
+    }
+
+    @Override
+    public void moveTo(float newX, float newY) {
+        super.moveTo(newX, newY);
+
+        if (mMap != null) {
+            mMap.getContainer().moveTo(newX, newY);
+        }
     }
 }

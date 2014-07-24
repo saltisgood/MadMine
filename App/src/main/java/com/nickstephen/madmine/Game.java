@@ -3,12 +3,10 @@ package com.nickstephen.madmine;
 import android.content.Context;
 
 import com.nickstephen.gamelib.anim.TranslationAnimation;
-import com.nickstephen.gamelib.opengl.Shape;
 import com.nickstephen.gamelib.opengl.layout.RootContainer;
 import com.nickstephen.lib.Twig;
 import com.nickstephen.madmine.content.RootContent;
 import com.nickstephen.madmine.content.StartScreen;
-import com.nickstephen.madmine.util.MineLoop;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -74,12 +72,13 @@ public class Game extends com.nickstephen.gamelib.run.Game {
 
     public void transition(@NotNull RootContainer newScreen) {
         mSwapView = newScreen;
-        new TranslationAnimation(mActiveView, 0.f, getWidth(), 0.f, 0.f).start();
-        //MineLoop.getInstanceUnsafe().addAnimation(new TranslationAnimation(mActiveView, 0.f, getWidth(), 0.f, 0.f));
+        new TranslationAnimation(mActiveView, 0.f, 0.f, getWidth(), 0.f).start();
         new TranslationAnimation(mSwapView, -getWidth(), 0.f, 0.f, 0.f).setAnimationEndListener(swap -> {
-            mActiveView.destroy();
-            mActiveView = mSwapView;
+            synchronized (Game.this) {
+                mActiveView.dispose();
+                mActiveView = mSwapView;
+                mSwapView = null;
+            }
         }).start();
-        //MineLoop.getInstanceUnsafe().addAnimation(new TranslationAnimation(mSwapView, - getWidth(), 0.f, 0.f, 0.f).setAnimationEndListener((Shape shape) -> { mActiveView = mSwapView; }));
     }
 }

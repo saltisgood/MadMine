@@ -2,9 +2,7 @@ package com.nickstephen.madmine.entities;
 
 import android.content.Context;
 
-import com.nickstephen.gamelib.opengl.AnimatedSprite;
-import com.nickstephen.gamelib.opengl.Shape;
-import com.nickstephen.gamelib.opengl.layout.Container;
+import com.nickstephen.gamelib.opengl.shapes.AnimatedSprite;
 import com.nickstephen.madmine.map.Map;
 import com.nickstephen.madmine.util.Constants;
 import com.nickstephen.madmine.util.ViewScaling;
@@ -40,7 +38,7 @@ public class Diamond extends GenericItem {
         if (entity instanceof PlayerChar) {
             mMap.collectDiamond();
             mShape.removeFromParent();
-            mShape.destroy();
+            mShape.dispose();
 
             return true;
         }

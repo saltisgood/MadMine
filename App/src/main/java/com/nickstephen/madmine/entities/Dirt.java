@@ -3,9 +3,7 @@ package com.nickstephen.madmine.entities;
 
 import android.content.Context;
 
-import com.nickstephen.gamelib.opengl.AnimatedSprite;
-import com.nickstephen.gamelib.opengl.Shape;
-import com.nickstephen.gamelib.opengl.layout.Container;
+import com.nickstephen.gamelib.opengl.shapes.AnimatedSprite;
 import com.nickstephen.madmine.map.Map;
 import com.nickstephen.madmine.util.Constants;
 import com.nickstephen.gamelib.util.Direction;
@@ -75,7 +73,7 @@ public class Dirt extends GenericEntity {
     public boolean collideWith(@NotNull GenericEntity entity) {
         if (entity instanceof PlayerChar) {
             mShape.removeFromParent();
-            mShape.destroy();
+            mShape.dispose();
             return true;
         }
         return super.collideWith(entity);

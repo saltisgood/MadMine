@@ -3,15 +3,17 @@ apply plugin: 'retrolambda'
 
 retrolambda {
     jdk "C:/Program Files/Java/jdk1.8.0_05"
+    oldJdk "C:/Program Files/Java/jdk1.7.0_51"
+    javaVersion JavaVersion.VERSION_1_6
 }
 
 android {
-    compileSdkVersion 19
+    compileSdkVersion 18
     buildToolsVersion '20.0.0'
 
     defaultConfig {
         minSdkVersion 8
-        targetSdkVersion 19
+        targetSdkVersion 18
         versionCode 1
         versionName "1.0"
     }
